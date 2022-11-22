@@ -95,23 +95,11 @@
     <Compile Include="CreateStorage.Designer.cs">
       <DependentUpon>CreateStorage.cs</DependentUpon>
     </Compile>
-    <Compile Include="SendEmail.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SendEmail.designer.cs">
-      <DependentUpon>SendEmail.cs</DependentUpon>
-    </Compile>
     <Compile Include="Interface.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface.Designer.cs">
       <DependentUpon>Interface.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LogIn.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LogIn.designer.cs">
-      <DependentUpon>LogIn.cs</DependentUpon>
     </Compile>
     <Compile Include="Storage.cs" />
     <Compile Include="MailFunctionality.cs" />
@@ -126,14 +114,8 @@
     <EmbeddedResource Include="CreateStorage.resx">
       <DependentUpon>CreateStorage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SendEmail.resx">
-      <DependentUpon>SendEmail.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Interface.resx">
       <DependentUpon>Interface.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LogIn.resx">
-      <DependentUpon>LogIn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogInScreen.resx">
       <DependentUpon>LogInScreen.cs</DependentUpon>

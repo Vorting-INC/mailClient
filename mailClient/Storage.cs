@@ -24,7 +24,7 @@ namespace mailClient
             MessageBox.Show("Successfully created a folder");
 
             FileFolderPath = path;
-            FileFOlderPathAttachments = pathAttachments;
+            FileFOlderPathAttachments = pathAttachments;           
 
         }
 

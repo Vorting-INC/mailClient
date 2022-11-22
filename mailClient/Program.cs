@@ -16,9 +16,12 @@ namespace mailClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+           
             Application.Run(new LogInScreen());
-            Application.Run(new CreateStorage());
-            Application.Run(new Interface());
+            
+            
+            //Application.Run(new CreateStorage());
+            //Application.Run(new Interface());
         }
     }
 }

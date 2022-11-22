@@ -42,8 +42,10 @@ namespace mailClient
                     //saves the path in the setting
                     Properties.Settings.Default["FolderPath"] = FileFolderPath;
                     Properties.Settings.Default["FolderPathAttachments"] = FileFolderPathAttachments;
+                    Properties.Settings.Default["StorageCreated"] = true;
                     Properties.Settings.Default.Save();
 
+                    this.Close();
                 }
                 else
                 {

@@ -28,25 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Recieve = new System.Windows.Forms.Button();
+            this.RetrieveNewEmail = new System.Windows.Forms.Button();
             this.RecievedEmails = new System.Windows.Forms.ListBox();
             this.RetrievedFolders = new System.Windows.Forms.ListBox();
+            this.RetrieveAllEmail = new System.Windows.Forms.Button();
+            this.RetriveFolders = new System.Windows.Forms.Button();
+            this.CreateStorageButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // Recieve
+            // RetrieveNewEmail
             // 
-            this.Recieve.Location = new System.Drawing.Point(25, 256);
-            this.Recieve.Name = "Recieve";
-            this.Recieve.Size = new System.Drawing.Size(75, 23);
-            this.Recieve.TabIndex = 0;
-            this.Recieve.Text = "Recieve";
-            this.Recieve.UseVisualStyleBackColor = true;
-            this.Recieve.Click += new System.EventHandler(this.Recieve_Click);
+            this.RetrieveNewEmail.Location = new System.Drawing.Point(12, 672);
+            this.RetrieveNewEmail.Name = "RetrieveNewEmail";
+            this.RetrieveNewEmail.Size = new System.Drawing.Size(137, 26);
+            this.RetrieveNewEmail.TabIndex = 0;
+            this.RetrieveNewEmail.Text = "Retrieve new emails";
+            this.RetrieveNewEmail.UseVisualStyleBackColor = true;
+            this.RetrieveNewEmail.Click += new System.EventHandler(this.Recieve_Click);
             // 
             // RecievedEmails
             // 
             this.RecievedEmails.FormattingEnabled = true;
-            this.RecievedEmails.Location = new System.Drawing.Point(349, 12);
+            this.RecievedEmails.Location = new System.Drawing.Point(259, 12);
             this.RecievedEmails.Name = "RecievedEmails";
             this.RecievedEmails.Size = new System.Drawing.Size(686, 654);
             this.RecievedEmails.TabIndex = 1;
@@ -61,14 +64,47 @@
             this.RetrievedFolders.TabIndex = 2;
             this.RetrievedFolders.SelectedIndexChanged += new System.EventHandler(this.RetrievedFolders_SelectedIndexChanged);
             // 
+            // RetrieveAllEmail
+            // 
+            this.RetrieveAllEmail.Location = new System.Drawing.Point(155, 672);
+            this.RetrieveAllEmail.Name = "RetrieveAllEmail";
+            this.RetrieveAllEmail.Size = new System.Drawing.Size(137, 26);
+            this.RetrieveAllEmail.TabIndex = 3;
+            this.RetrieveAllEmail.Text = "Retrieve All Email";
+            this.RetrieveAllEmail.UseVisualStyleBackColor = true;
+            this.RetrieveAllEmail.Click += new System.EventHandler(this.RetrieveAllEmail_Click);
+            // 
+            // RetriveFolders
+            // 
+            this.RetriveFolders.Location = new System.Drawing.Point(298, 672);
+            this.RetriveFolders.Name = "RetriveFolders";
+            this.RetriveFolders.Size = new System.Drawing.Size(138, 26);
+            this.RetriveFolders.TabIndex = 4;
+            this.RetriveFolders.Text = "Retrieve Folders";
+            this.RetriveFolders.UseVisualStyleBackColor = true;
+            this.RetriveFolders.Click += new System.EventHandler(this.RetriveFolders_Click);
+            // 
+            // CreateStorageButton
+            // 
+            this.CreateStorageButton.Location = new System.Drawing.Point(442, 672);
+            this.CreateStorageButton.Name = "CreateStorageButton";
+            this.CreateStorageButton.Size = new System.Drawing.Size(137, 26);
+            this.CreateStorageButton.TabIndex = 5;
+            this.CreateStorageButton.Text = "Create storage";
+            this.CreateStorageButton.UseVisualStyleBackColor = true;
+            this.CreateStorageButton.Click += new System.EventHandler(this.CreateStorageButton_Click);
+            // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1105, 710);
+            this.Controls.Add(this.CreateStorageButton);
+            this.Controls.Add(this.RetriveFolders);
+            this.Controls.Add(this.RetrieveAllEmail);
             this.Controls.Add(this.RetrievedFolders);
             this.Controls.Add(this.RecievedEmails);
-            this.Controls.Add(this.Recieve);
+            this.Controls.Add(this.RetrieveNewEmail);
             this.Name = "Interface";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Interface_Load);
@@ -78,8 +114,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Button Recieve;
+        private System.Windows.Forms.Button RetrieveNewEmail;
         private System.Windows.Forms.ListBox RecievedEmails;
         private System.Windows.Forms.ListBox RetrievedFolders;
+        private System.Windows.Forms.Button RetrieveAllEmail;
+        private System.Windows.Forms.Button RetriveFolders;
+        private System.Windows.Forms.Button CreateStorageButton;
     }
 }

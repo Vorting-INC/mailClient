@@ -3,13 +3,25 @@
   <Profiles />
   <Settings>
     <Setting Name="FolderPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">@C:/user/</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="FolderPathAttachments" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Setting" Type="System.String" Scope="User">
+    <Setting Name="RememberMe" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Email" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Server" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="StorageCreated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

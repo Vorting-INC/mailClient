@@ -13,8 +13,8 @@ namespace mailClient
         public string Date { get; set; }
         public string Body { get; set; }
         public string To { get; set; }
-        public string CC { get; set; }
-        public string BCC { get; set; }
+        public string Cc { get; set; }
+        public string Bcc { get; set; }
 
         //Location of Attachment
         public string Attachment { get; set; }

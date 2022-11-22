@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 
 
@@ -23,13 +24,39 @@ namespace mailClient
 
         private void CreateFileFolder_Click(object sender, EventArgs e)
         {
-            string FileName = FileFolderLokation.Text;
+            
+            if (FileFolderName.Text != "")
+            {
+                if (FileFolderLokation.Text != "")
+                {
+                    //constructs a storage i
+                    StorageInterface Storage = new StorageInterface();
+                    //call the create folder from the storage Class
+                    Storage.CreateFolder(FileFolderName.Text, FileFolderLokation.Text);
 
-            StorageInterface Storage = new StorageInterface();
-            Storage.CreateFolder(FileFolderName.Text, FileFolderLokation.Text);
 
+                    //This get the two path from the storage class
+                    string FileFolderPath = Storage.GetFileFolderPath();
+                    string FileFolderPathAttachments = Storage.GetFileFolderPathAttachments();
 
+                    //saves the path in the setting
+                    Properties.Settings.Default["FolderPath"] = FileFolderPath;
+                    Properties.Settings.Default["FolderPathAttachments"] = FileFolderPathAttachments;
+                    Properties.Settings.Default.Save();
+
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a path for the folder");
+                }
+            }
+            else if (FileFolderName.Text == "")
+            {
+                MessageBox.Show("Please enter a name for the folder");
+            }
         }
+
+        
         private void OpenFileManager_Click(object sender, EventArgs e)
        
         {

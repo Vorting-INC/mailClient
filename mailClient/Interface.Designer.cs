@@ -30,11 +30,12 @@
         {
             this.Recieve = new System.Windows.Forms.Button();
             this.RecievedEmails = new System.Windows.Forms.ListBox();
+            this.RetrievedFolders = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // Recieve
             // 
-            this.Recieve.Location = new System.Drawing.Point(220, 368);
+            this.Recieve.Location = new System.Drawing.Point(25, 256);
             this.Recieve.Name = "Recieve";
             this.Recieve.Size = new System.Drawing.Size(75, 23);
             this.Recieve.TabIndex = 0;
@@ -45,17 +46,27 @@
             // RecievedEmails
             // 
             this.RecievedEmails.FormattingEnabled = true;
-            this.RecievedEmails.Location = new System.Drawing.Point(16, 22);
+            this.RecievedEmails.Location = new System.Drawing.Point(349, 12);
             this.RecievedEmails.Name = "RecievedEmails";
-            this.RecievedEmails.Size = new System.Drawing.Size(204, 394);
+            this.RecievedEmails.Size = new System.Drawing.Size(686, 654);
             this.RecievedEmails.TabIndex = 1;
             this.RecievedEmails.SelectedIndexChanged += new System.EventHandler(this.RecievedEmails_SelectedIndexChanged);
+            // 
+            // RetrievedFolders
+            // 
+            this.RetrievedFolders.FormattingEnabled = true;
+            this.RetrievedFolders.Location = new System.Drawing.Point(25, 12);
+            this.RetrievedFolders.Name = "RetrievedFolders";
+            this.RetrievedFolders.Size = new System.Drawing.Size(183, 238);
+            this.RetrievedFolders.TabIndex = 2;
+            this.RetrievedFolders.SelectedIndexChanged += new System.EventHandler(this.RetrievedFolders_SelectedIndexChanged);
             // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1105, 710);
+            this.Controls.Add(this.RetrievedFolders);
             this.Controls.Add(this.RecievedEmails);
             this.Controls.Add(this.Recieve);
             this.Name = "Interface";
@@ -69,5 +80,6 @@
 
         private System.Windows.Forms.Button Recieve;
         private System.Windows.Forms.ListBox RecievedEmails;
+        private System.Windows.Forms.ListBox RetrievedFolders;
     }
 }

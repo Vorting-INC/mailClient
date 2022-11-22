@@ -10,17 +10,22 @@ namespace mailClient
     internal class StorageInterface
     {
 
-        string FileFolderPath = "C:\\Users\\askvo\\Desktop\\mailtest";
-        
+        string FileFolderPath = "";
+        string FileFOlderPathAttachments = "";
+
         //creates a folder in the storage
-        public string CreateFolder(string FolderName, string Location)
+        public void CreateFolder(string FolderName, string Location)
         {
 
             string path = System.IO.Path.Combine(Location, FolderName);
             System.IO.Directory.CreateDirectory(path);
+            string pathAttachments = System.IO.Path.Combine(path, "Attachments");
+            System.IO.Directory.CreateDirectory(pathAttachments);
             MessageBox.Show("Successfully created a folder");
 
-            return path;
+            FileFolderPath = path;
+            FileFOlderPathAttachments = pathAttachments;
+
         }
 
         //create a file in storage
@@ -51,12 +56,18 @@ namespace mailClient
             return FileFolderPath;
         }
 
-        public
+        public string GetFileFolderPathAttachments()
+        {
 
-        
+            return FileFOlderPathAttachments;
+        }
 
 
-        
+
+
+
+
+
 
     }
 

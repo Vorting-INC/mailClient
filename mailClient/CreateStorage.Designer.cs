@@ -110,7 +110,7 @@
             this.Controls.Add(this.FileFolderName);
             this.Controls.Add(this.CreateFileFolder);
             this.Name = "CreateStorage";
-            this.Text = "Form1";
+            this.Text = "CreateStorage";
             this.Load += new System.EventHandler(this.CreateStorage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

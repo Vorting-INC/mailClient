@@ -12,13 +12,17 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
-
-
+using System.Text.RegularExpressions;
 
 namespace mailClient
 {
     internal class MailFunctionality
     {
+    
+           
+
+
+
         //Checks if the email is valid by connectid to Email server with Imap
         public bool LogIn(string Email, string Password, string Server)
         {
@@ -29,7 +33,7 @@ namespace mailClient
                     client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                     client.Connect(Server, 993, true);
                     client.Authenticate(Email, Password);
-                    client.Disconnect(true);
+                    
                     return true;
                 }
            // }
@@ -80,75 +84,7 @@ namespace mailClient
         }
 
 
-        public async void RetrieveEmailToJson(string Email , string Password, string Server)
-        {
-            using (var client = new ImapClient())
-            {
-                
-                await client.ConnectAsync(Server, 993, true);
-                await client.AuthenticateAsync(Email, Password);
-
-                //retrieve last email from server
-                var inbox = client.Inbox;
-                inbox.Open(FolderAccess.ReadOnly);
-
-                
-
-                Console.WriteLine("Total messages: {0}", inbox.Count);
-                Console.WriteLine("Recent messages: {0}", inbox.Recent);
-               
-                
-                for(int i = 0; i < inbox.Count; i++)
-                {
-                    var message = inbox.GetMessage(i);
-                    Console.WriteLine("Subject: {0}", message.Body);
-
-                }
-
-
-                //foreach (var message in inbox.fetch(0, -1, messagesummaryitems.full | messagesummaryitems.uniqueid))
-                //{
-                //    var email = new emaillistdata();
-                //    email.from = message.envelope.from.tostring();
-                //    email.subject = message.envelope.subject.tostring();
-                //    email.date = message.date.tostring();
-
-
-                //    email.to = message.envelope.to.tostring();
-                //    email.cc = message.envelope.cc.tostring();
-                //    email.bcc = message.envelope.bcc.tostring();
-
-
-                //    string jsonfile = jsonconvert.serializeobject(email);
-                //    string path = @"c:\users\askvo\documents\emailfolder\" + message.envelope.subject.tostring() + ".json";
-
-                //    if (file.exists(path))
-                //    {
-                //        file.delete(path);
-                //        using (var tw = new streamwriter(path, true))
-                //        {
-                //            tw.writeline(jsonfile.tostring());
-                //            tw.close();
-                //        }
-
-                //    }
-                //    else if (!file.exists(path))
-                //    {
-                //        using (var tw = new streamwriter(path, true))
-                //        {
-                //            tw.writeline(jsonfile.tostring());
-                //            tw.close();
-                //        }
-                //    }
-
-                //}
-
-                client.Disconnect(true);
-                
-               
-            }
-        }
-
+        //Functions that Downloads New Emails
         public void DownloadNewEmails(string Email, string Password, string Server)
         {
             using (var client = new ImapClient())
@@ -164,7 +100,7 @@ namespace mailClient
 
                 foreach (var item in items)
                 {
-                    if (item.Flags.Value.HasFlag(MessageFlags.Seen))
+                    if (!item.Flags.Value.HasFlag(MessageFlags.Seen))
                     {
                         //Set the flag to seen
                         inbox.AddFlags(item.UniqueId, MessageFlags.Seen, true);
@@ -230,8 +166,9 @@ namespace mailClient
                         string jsonfile = JsonConvert.SerializeObject(email);
                         string subject = item.Envelope.Subject.ToString();
                         //remove this charrackte :  from the string 
-                        
-                        
+                        subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
+
+
 
                         string pathFolder = Properties.Settings.Default.FolderPath + "\\Inbox\\" + subject + ".json";
                         
@@ -247,24 +184,133 @@ namespace mailClient
                             tw.WriteLine(jsonfile.ToString());
                             tw.Close();
                         }
+                    }
+                }
+                
+            }
+        }
+
+        //Function that downloads all Email from the server and put them into their respective folders
+        public void DownloadAllEmails(string Email, string Password, string Server)
+        {
+            using (var client = new ImapClient())
+            {
+                if (!client.IsConnected)
+                {
+                    Console.WriteLine("Connecting to server...");
+                    client.Connect(Server, 993, true);
+                    client.Authenticate(Email, Password);
+                }
+
+                var folders = client.GetFolders(new FolderNamespace('.', ""));
+                //Goes through the folders
+                foreach (var folder in folders)
+                {
+                    Console.WriteLine("Folder: {0}", folder.Name);
+                    //open the folder
+                    folder.Open(FolderAccess.ReadWrite);
+                    var items = folder.Fetch(0, -1, MessageSummaryItems.Full | MessageSummaryItems.UniqueId | MessageSummaryItems.BodyStructure);
+
+                    //Goes through each Email in the folder
+                    foreach (var item in items)
+                    {
+                        Console.WriteLine("Email: {0}", item.Envelope.Subject);
+                        
+                        //add a seen flag to the mail so we know we dont have to download it again
+                        folder.AddFlags(item.UniqueId, MessageFlags.Seen, true);
+                        //create a new emailListdata clas to store the data in Json format
+                        var email = new EmailListData();
+                        email.From = item.Envelope.From.ToString();
+                        email.Subject = item.Envelope.Subject.ToString();
+                        email.Date = item.Date.ToString();
+                        email.To = item.Envelope.To.ToString();
+                        email.Cc = item.Envelope.Cc.ToString();
+                        email.Bcc = item.Envelope.Bcc.ToString();
+
+
+                        // get the body structure for the message
+                        // IMessageSummary.TextBody is a convenience property that finds the 'text/plain' body part for us
+                        var bodyPart = item.TextBody;
+
+                        if (bodyPart == null)
+                        {
+                            email.Body = "There is a problem with this Email, it could be that it has no body";
+
+                        }
+                        else
+                        {
+                            // download the 'text/plain' body part
+                            var bodyEmail = (TextPart)folder.GetBodyPart(item.UniqueId, bodyPart);
+
+                            // TextPart.Text is a convenience property that decodes the content and converts the result to
+                            // a string for us
+                            var bodytext = bodyEmail.Text;
+
+                            email.Body = bodytext;
+                        }
                         
 
 
+                        // now iterate over all of the attachments and save them to disk
+                        foreach (var attachment in item.Attachments)
+                        {
+
+                            // download the attachment just like we did with the body
+                            var entity = folder.GetBodyPart(item.UniqueId, attachment);
+
+                            // attachments can be either message/rfc822 parts or regular MIME parts
+                            if (entity is MessagePart)
+                            {
+                                var rfc822 = (MessagePart)entity;
+                                string folderPathAttachments = Properties.Settings.Default.FolderPathAttachments;
+                                var path = Path.Combine(folderPathAttachments, attachment.PartSpecifier + ".eml");
+
+                                rfc822.Message.WriteTo(path);
+                                email.Attachment = path;
+                            }
+                            else
+                            {
+                                var part = (MimePart)entity;
+
+                                // note: it's possible for this to be null, but most will specify a filename
+                                var fileName = part.FileName;
+                                string folderPathAttachments = Properties.Settings.Default.FolderPathAttachments;
+                                var path = Path.Combine(folderPathAttachments, fileName);
+
+                                // decode and save the content to a file
+                                using (var stream = File.Create(path))
+                                    part.Content.DecodeTo(stream);
+                                email.Attachment = path;
+                            }
+                        }
+
+                        string jsonfile = JsonConvert.SerializeObject(email);
+                        string subject = item.Envelope.Subject.ToString();
+                        //remove this charrackte :  from the string
+                        subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
+
+                        string pathFolder = Properties.Settings.Default.FolderPath + "\\" + folder.Name + "\\" + subject + "_"+ item.UniqueId + ".json";
+
+                        if (File.Exists(pathFolder))
+                        {
+                            File.Delete(pathFolder);
+                        }
+
+                        //write the json file to the pathFolder using stream
+                        using (var tw = new StreamWriter(pathFolder, true))
+                        {
+                            tw.WriteLine(jsonfile.ToString());
+                            tw.Close();
+                        }
 
 
 
                     }
-
-
                 }
-
-                client.Disconnect(true);
             }
         }
-
         
-
-
+        
 
 
         //Retrieve the Folders from the Email Server and create Folder in the local machine

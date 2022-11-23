@@ -27,6 +27,8 @@ namespace mailClient
             FileFOlderPathAttachments = pathAttachments;           
 
         }
+        
+
 
         //create a file in storage
         public void CreateFile(string FileName, string Path)

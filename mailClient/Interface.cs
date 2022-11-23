@@ -56,7 +56,7 @@ namespace mailClient
         }
 
 
-
+        
         
 
        
@@ -68,7 +68,8 @@ namespace mailClient
 
         private void RetrieveAllEmail_Click(object sender, EventArgs e)
         {
-
+            //call function to retrieve all emails
+            mailFunctionality.DownloadAllEmails(Email, Password, Server);
         }
 
         private void RetriveFolders_Click(object sender, EventArgs e)

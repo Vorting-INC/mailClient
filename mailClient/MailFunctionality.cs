@@ -206,7 +206,7 @@ namespace mailClient
                 //Goes through the folders
                 foreach (var folder in folders)
                 {
-                    Console.WriteLine("Folder: {0}", folder.Name);
+                    
                     //open the folder
                     folder.Open(FolderAccess.ReadWrite);
                     var items = folder.Fetch(0, -1, MessageSummaryItems.Full | MessageSummaryItems.UniqueId | MessageSummaryItems.BodyStructure);
@@ -214,7 +214,7 @@ namespace mailClient
                     //Goes through each Email in the folder
                     foreach (var item in items)
                     {
-                        Console.WriteLine("Email: {0}", item.Envelope.Subject);
+                        
                         
                         //add a seen flag to the mail so we know we dont have to download it again
                         folder.AddFlags(item.UniqueId, MessageFlags.Seen, true);

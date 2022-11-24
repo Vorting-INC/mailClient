@@ -26,8 +26,7 @@ namespace mailClient
         //Checks if the email is valid by connectid to Email server with Imap
         public bool LogIn(string Email, string Password, string Server)
         {
-       // try
-            //{
+     
                 using (var client = new ImapClient())
                 {
                     client.ServerCertificateValidationCallback = (s, c, h, e) => true;
@@ -36,37 +35,45 @@ namespace mailClient
                     
                     return true;
                 }
-           // }
-            //catch (Exception)
-            //{
-            //    return false;
-
-
-            //}
+          
             
         }
 
         //Sending Using MimeKit and SMTP
-        public void SendMail(string Name, string Email, string Password, string Server, string To, string Subject, string Body)
+        public void SendEmailTest(EmailListData email, string Email, string Password , string Server)
         {
             
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(Name, Email));
-            message.To.Add(new MailboxAddress("", To));
-            message.Subject = Subject;
+            message.From.Add(new MailboxAddress("", Email));
+            message.To.Add(new MailboxAddress("", email.To));
+            message.Subject = email.Subject;
             message.Body = new TextPart("plain")
-
-            //attachment
-            //message.attachments.add(new mimepart("application", "octet-stream")
-            //{
-            //    content = new mimecontent(new memorystream(file.readallbytes("c:\\users\\public\\pictures\\sample pictures\\desert.jpg"))),
-            //    contentdisposition = new contentdisposition(contentdisposition.attachment),
-            //    contenttransferencoding = contentencoding.base64,
-            //    filename = path.getfilename("c:\\users\\public\\pictures\\sample pictures\\desert.jpg")
-            //});
+            
             {
-                Text = Body
+                Text = email.Body
             };
+            if (email.Cc != "")
+            {
+                message.Cc.Add(new MailboxAddress("", email.Cc));
+            }
+            if (email.Attachment != "")
+            {
+                //adds the attachment to the Mimemessage
+                var attachment = new MimePart("application", "octet-stream")
+                {
+                    Content = new MimeContent(File.OpenRead(email.Attachment), ContentEncoding.Default),
+                    ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                    ContentTransferEncoding = ContentEncoding.Base64,
+                    FileName = Path.GetFileName(email.Attachment)
+                };
+                message.Body = new Multipart("mixed")
+                {
+                    message.Body,
+                    attachment
+                };
+                
+            }
+            
 
             using (var client = new SmtpClient())
             {
@@ -83,6 +90,70 @@ namespace mailClient
             }
         }
 
+        //send an email taking the class EmailListData as a parameter
+        public async void SendEmail(EmailListData email, string Email, string Password, string Server)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Ask",Email));
+            message.To.Add(MailboxAddress.Parse(email.To));
+            
+            Console.WriteLine(email.To);
+            message.Subject = email.Subject;
+            if (email.Cc != "")
+            {
+                message.Cc.Add(new MailboxAddress("", email.Cc));
+            }
+           
+            
+           
+
+            BodyBuilder builder = new BodyBuilder();
+            
+                
+            builder.TextBody = email.Body;
+            if (email.Attachment != "")
+            {
+                builder.Attachments.Add(email.Attachment);
+            }
+            
+            message.Body = builder.ToMessageBody();
+            
+
+            //Send the mail via SMTP
+            SmtpClient client = new SmtpClient();
+            
+                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                
+
+                string SMTPserver = Server;
+                //removes imap prefix from Server and set it to SMTP
+                SMTPserver = SMTPserver.Replace("imap", "smtp");
+                Console.WriteLine(SMTPserver);
+
+
+
+                //await client.ConnectAsync(SMTPserver, 465, true);
+                client.Connect(SMTPserver, 587, false);
+
+                await client.AuthenticateAsync(Email, Password);
+                await client.SendAsync(message);
+                Console.WriteLine("Should have send");
+
+                if(!client.IsConnected)
+                {
+                    Console.WriteLine("Not connected");
+                    //return false;
+                }
+                client.Disconnect(true);
+                client.Dispose();
+                //check if the mail was send 
+                //return true;
+                
+            
+
+        }
 
         //Functions that Downloads New Emails
         public void DownloadNewEmails(string Email, string Password, string Server)
@@ -170,7 +241,7 @@ namespace mailClient
 
 
 
-                        string pathFolder = Properties.Settings.Default.FolderPath + "\\Inbox\\" + subject + ".json";
+                        string pathFolder = Properties.Settings.Default.FolderPath + "\\Inbox\\" + subject+"_"+item.UniqueId + ".json";
                         
 
                         if (File.Exists(pathFolder))
@@ -336,7 +407,29 @@ namespace mailClient
         }
         //this function is done
 
-        
+        //this function  saves EmailListdata to a json file
+        public void SaveEmail(EmailListData emai)
+        {
+            string jsonfile = JsonConvert.SerializeObject(emai);
+            string subject = emai.Subject;
+            //remove this charrackte :  from the string
+            subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
+
+            string pathFolder = Properties.Settings.Default.FolderPath + "\\Sent\\" + subject + ".json";
+
+            if (File.Exists(pathFolder))
+            {
+                File.Delete(pathFolder);
+            }
+
+            //write the json file to the pathFolder using stream
+            using (var tw = new StreamWriter(pathFolder, true))
+            {
+                tw.WriteLine(jsonfile.ToString());
+                tw.Close();
+            }
+
+        }
 
     }
 }

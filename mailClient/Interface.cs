@@ -84,5 +84,14 @@ namespace mailClient
             createStorage.Show();
             
         }
+
+
+        //opens windows to send an Email
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+            SendingEmail SendingEmail = new SendingEmail();
+            SendingEmail.Show();           
+        }
     }
 }

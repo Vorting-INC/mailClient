@@ -84,3 +84,4 @@ C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\bin\Debug\System.Text.Js
 C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\bin\Debug\System.ValueTuple.xml
 C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\obj\Debug\EmailClient.csproj.CopyComplete
+C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\obj\Debug\mailClient.SendingEmail.resources

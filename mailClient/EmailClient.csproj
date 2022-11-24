@@ -101,6 +101,12 @@
     <Compile Include="Interface.Designer.cs">
       <DependentUpon>Interface.cs</DependentUpon>
     </Compile>
+    <Compile Include="SendingEmail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendingEmail.Designer.cs">
+      <DependentUpon>SendingEmail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Storage.cs" />
     <Compile Include="MailFunctionality.cs" />
     <Compile Include="LogInScreen.cs">
@@ -130,6 +136,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SendingEmail.resx">
+      <DependentUpon>SendingEmail.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

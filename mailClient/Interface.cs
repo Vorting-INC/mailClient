@@ -162,5 +162,10 @@ namespace mailClient
         {
 
         }
+
+        private void EmailListView_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

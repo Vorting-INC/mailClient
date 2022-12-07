@@ -35,10 +35,10 @@
             this.CreateStorageButton = new System.Windows.Forms.Button();
             this.SendAnEmail = new System.Windows.Forms.Button();
             this.EmailListView = new System.Windows.Forms.ListView();
-            this.SenderColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.SubjectColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DateColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Seen = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.From = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Subject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Flag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // RetrieveNewEmail
@@ -106,50 +106,46 @@
             // EmailListView
             // 
             this.EmailListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.SenderColumn,
-            this.SubjectColumn,
-            this.DateColumn,
-            this.Seen});
+            this.From,
+            this.Subject,
+            this.Date,
+            this.Flag});
             this.EmailListView.HideSelection = false;
-            this.EmailListView.Location = new System.Drawing.Point(183, 12);
+            this.EmailListView.Location = new System.Drawing.Point(154, 12);
             this.EmailListView.Name = "EmailListView";
-            this.EmailListView.Size = new System.Drawing.Size(600, 654);
-            this.EmailListView.TabIndex = 8;
+            this.EmailListView.Size = new System.Drawing.Size(676, 654);
+            this.EmailListView.TabIndex = 7;
             this.EmailListView.UseCompatibleStateImageBehavior = false;
-            this.EmailListView.View = System.Windows.Forms.View.List;
-            this.EmailListView.SelectedIndexChanged += new System.EventHandler(this.EmailListView_SelectedIndexChanged);
+            this.EmailListView.View = System.Windows.Forms.View.Details;
+            this.EmailListView.SelectedIndexChanged += new System.EventHandler(this.EmailListView_SelectedIndexChanged_1);
             this.EmailListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.EmailListView_MouseClick);
             this.EmailListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EmailListView_MouseDoubleClick);
             // 
-            // SenderColumn
+            // From
             // 
-            this.SenderColumn.DisplayIndex = 1;
-            this.SenderColumn.Text = "Sender";
-            this.SenderColumn.Width = 200;
+            this.From.Text = "From";
+            this.From.Width = 150;
             // 
-            // SubjectColumn
+            // Subject
             // 
-            this.SubjectColumn.DisplayIndex = 2;
-            this.SubjectColumn.Text = "Subject";
-            this.SubjectColumn.Width = 275;
+            this.Subject.Text = "Subject";
+            this.Subject.Width = 275;
             // 
-            // DateColumn
+            // Date
             // 
-            this.DateColumn.DisplayIndex = 3;
-            this.DateColumn.Text = "Date";
-            this.DateColumn.Width = 125;
+            this.Date.Text = "Date";
+            this.Date.Width = 145;
             // 
-            // Seen
+            // Flag
             // 
-            this.Seen.DisplayIndex = 0;
-            this.Seen.Text = "Seen";
-            this.Seen.Width = 10;
+            this.Flag.Text = "Flag";
+            this.Flag.Width = 82;
             // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 716);
+            this.ClientSize = new System.Drawing.Size(842, 683);
             this.Controls.Add(this.EmailListView);
             this.Controls.Add(this.SendAnEmail);
             this.Controls.Add(this.CreateStorageButton);
@@ -173,9 +169,9 @@
         private System.Windows.Forms.Button CreateStorageButton;
         private System.Windows.Forms.Button SendAnEmail;
         private System.Windows.Forms.ListView EmailListView;
-        private System.Windows.Forms.ColumnHeader SenderColumn;
-        private System.Windows.Forms.ColumnHeader SubjectColumn;
-        private System.Windows.Forms.ColumnHeader DateColumn;
-        private System.Windows.Forms.ColumnHeader Seen;
+        private System.Windows.Forms.ColumnHeader From;
+        private System.Windows.Forms.ColumnHeader Subject;
+        private System.Windows.Forms.ColumnHeader Date;
+        private System.Windows.Forms.ColumnHeader Flag;
     }
 }

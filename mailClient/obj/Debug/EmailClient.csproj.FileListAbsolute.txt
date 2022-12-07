@@ -85,3 +85,4 @@ C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\bin\Debug\System.Threadi
 C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\bin\Debug\System.ValueTuple.xml
 C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\obj\Debug\EmailClient.csproj.CopyComplete
 C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\obj\Debug\mailClient.SendingEmail.resources
+C:\Users\askvo\Desktop\mailCleint\mailClient\mailClient\obj\Debug\mailClient.EmailShow.resources

@@ -24,6 +24,8 @@ namespace mailClient
         StorageInterface storageInterface = new StorageInterface();
         //add a global variable to hold the emails in the list
         List<EmailListData> EmailList = new List<EmailListData>();
+
+        
         public Interface()
         {
 
@@ -134,9 +136,31 @@ namespace mailClient
 
         private void EmailListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //show the Email selected in the EmailListView in the RecievedEmails textbox
-            RecievedEmails.Text = EmailList[EmailListView.SelectedIndices[0]].Body;
+           
+        }
+
+        
+        private void EmailListView_MouseClick(object sender, MouseEventArgs e)
+        {
+            //get the selected item in the listview
+            var index = EmailListView.SelectedIndices[0];
             
+            //show the Email selected in the EmailListView in the RecievedEmails textbox
+            
+        }
+
+        private void EmailListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            //Opens a window to show the email selected in the form EmailShow
+            var index = EmailListView.SelectedIndices[0];
+            EmailShow emailShow = new EmailShow(EmailList[index]);
+            emailShow.Show();
+
+        }
+
+        private void Interface_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.RetrieveNewEmail = new System.Windows.Forms.Button();
-            this.RecievedEmails = new System.Windows.Forms.ListBox();
             this.RetrievedFolders = new System.Windows.Forms.ListBox();
             this.RetrieveAllEmail = new System.Windows.Forms.Button();
             this.RetriveFolders = new System.Windows.Forms.Button();
@@ -39,6 +38,7 @@
             this.SenderColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SubjectColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DateColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Seen = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // RetrieveNewEmail
@@ -50,15 +50,6 @@
             this.RetrieveNewEmail.Text = "Retrieve new emails";
             this.RetrieveNewEmail.UseVisualStyleBackColor = true;
             this.RetrieveNewEmail.Click += new System.EventHandler(this.Recieve_Click);
-            // 
-            // RecievedEmails
-            // 
-            this.RecievedEmails.FormattingEnabled = true;
-            this.RecievedEmails.Location = new System.Drawing.Point(781, 12);
-            this.RecievedEmails.Name = "RecievedEmails";
-            this.RecievedEmails.Size = new System.Drawing.Size(312, 654);
-            this.RecievedEmails.TabIndex = 1;
-            this.RecievedEmails.SelectedIndexChanged += new System.EventHandler(this.RecievedEmails_SelectedIndexChanged);
             // 
             // RetrievedFolders
             // 
@@ -117,46 +108,58 @@
             this.EmailListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.SenderColumn,
             this.SubjectColumn,
-            this.DateColumn});
+            this.DateColumn,
+            this.Seen});
             this.EmailListView.HideSelection = false;
-            this.EmailListView.Location = new System.Drawing.Point(144, 11);
+            this.EmailListView.Location = new System.Drawing.Point(183, 12);
             this.EmailListView.Name = "EmailListView";
-            this.EmailListView.Size = new System.Drawing.Size(600, 600);
+            this.EmailListView.Size = new System.Drawing.Size(600, 654);
             this.EmailListView.TabIndex = 8;
             this.EmailListView.UseCompatibleStateImageBehavior = false;
-            this.EmailListView.View = System.Windows.Forms.View.Details;
+            this.EmailListView.View = System.Windows.Forms.View.List;
             this.EmailListView.SelectedIndexChanged += new System.EventHandler(this.EmailListView_SelectedIndexChanged);
+            this.EmailListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.EmailListView_MouseClick);
+            this.EmailListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EmailListView_MouseDoubleClick);
             // 
             // SenderColumn
             // 
+            this.SenderColumn.DisplayIndex = 1;
             this.SenderColumn.Text = "Sender";
             this.SenderColumn.Width = 200;
             // 
             // SubjectColumn
             // 
+            this.SubjectColumn.DisplayIndex = 2;
             this.SubjectColumn.Text = "Subject";
-            this.SubjectColumn.Width = 300;
+            this.SubjectColumn.Width = 275;
             // 
             // DateColumn
             // 
+            this.DateColumn.DisplayIndex = 3;
             this.DateColumn.Text = "Date";
-            this.DateColumn.Width = 100;
+            this.DateColumn.Width = 125;
+            // 
+            // Seen
+            // 
+            this.Seen.DisplayIndex = 0;
+            this.Seen.Text = "Seen";
+            this.Seen.Width = 10;
             // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1105, 710);
+            this.ClientSize = new System.Drawing.Size(842, 716);
             this.Controls.Add(this.EmailListView);
             this.Controls.Add(this.SendAnEmail);
             this.Controls.Add(this.CreateStorageButton);
             this.Controls.Add(this.RetriveFolders);
             this.Controls.Add(this.RetrieveAllEmail);
             this.Controls.Add(this.RetrievedFolders);
-            this.Controls.Add(this.RecievedEmails);
             this.Controls.Add(this.RetrieveNewEmail);
             this.Name = "Interface";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.Interface_Load);
             this.ResumeLayout(false);
 
         }
@@ -164,7 +167,6 @@
         #endregion
 
         private System.Windows.Forms.Button RetrieveNewEmail;
-        private System.Windows.Forms.ListBox RecievedEmails;
         private System.Windows.Forms.ListBox RetrievedFolders;
         private System.Windows.Forms.Button RetrieveAllEmail;
         private System.Windows.Forms.Button RetriveFolders;
@@ -174,5 +176,6 @@
         private System.Windows.Forms.ColumnHeader SenderColumn;
         private System.Windows.Forms.ColumnHeader SubjectColumn;
         private System.Windows.Forms.ColumnHeader DateColumn;
+        private System.Windows.Forms.ColumnHeader Seen;
     }
 }

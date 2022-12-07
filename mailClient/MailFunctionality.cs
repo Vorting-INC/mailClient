@@ -285,15 +285,28 @@ namespace mailClient
                     //Goes through each Email in the folder
                     foreach (var item in items)
                     {
-                        
-                        
+
+
                         //add a seen flag to the mail so we know we dont have to download it again
                         folder.AddFlags(item.UniqueId, MessageFlags.Seen, true);
                         //create a new emailListdata clas to store the data in Json format
                         var email = new EmailListData();
                         email.From = item.Envelope.From.ToString();
-                        email.Subject = item.Envelope.Subject.ToString();
+
+                        //check if email has a subject
+                        if (item.Envelope.Subject != null)
+                        {
+                            email.Subject = item.Envelope.Subject.ToString();
+                        }
+                        else
+                        {
+                            email.Subject = "No Subject";
+                        }
                         email.Date = item.Date.ToString();
+                        //if there +00.00 remove the +00:00 from the end of the date string 
+                        email.Date = email.Date.Replace("+00:00", "");
+
+
                         email.To = item.Envelope.To.ToString();
                         email.Cc = item.Envelope.Cc.ToString();
                         email.Bcc = item.Envelope.Bcc.ToString();
@@ -356,7 +369,8 @@ namespace mailClient
                         }
 
                         string jsonfile = JsonConvert.SerializeObject(email);
-                        string subject = item.Envelope.Subject.ToString();
+                        
+                        string subject = email.Subject;
                         //remove this charrackte :  from the string
                         subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
 

@@ -21,26 +21,45 @@ namespace mailClient
         string Server = Properties.Settings.Default.Server;
         string Password = Properties.Settings.Default.Password;
         MailFunctionality mailFunctionality = new MailFunctionality();
+        StorageInterface storageInterface = new StorageInterface();
+        //add a global variable to hold the emails in the list
+        List<EmailListData> EmailList = new List<EmailListData>();
         public Interface()
         {
-            
+
             InitializeComponent();
-            //RetrieveFolders(Email, Password, Server);
-            
-            
-            
-            //mailFunctionality.RetrieveEmailToJson(Email, Password, Server);
-            //MailFunctionality.DownloadBodyParts(Email, Password, Server);
+            RetriveFoldersToListBox();
 
-
-
-
+     
         }
 
-        private void Interface_Load(object sender, EventArgs e)
+
+
+        public void Interface_Load()
         {
+            
 
         }
+
+        //add folders from the folder FolderPath local storage to the listbox RetrievedFolders and display only the folder name
+        public void RetriveFoldersToListBox()
+        {
+            string[] folders = Directory.GetDirectories(Properties.Settings.Default.FolderPath);
+            foreach (string folder in folders)
+            {
+                RetrievedFolders.Items.Add(Path.GetFileName(folder));
+            }
+        }
+
+        
+        
+        
+
+
+
+
+
+
 
         private void Recieve_Click(object sender, EventArgs e)
         {
@@ -59,11 +78,30 @@ namespace mailClient
         
         
 
-       
+       //When item in the listbox is selected, display the emails in the folder in the EmailListView
+       //this is done by calling the function LoadJsonFiles
         private void RetrievedFolders_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //clear the EmailListView
+            EmailListView.Items.Clear();
             
-        
+            string path = Path.Combine(Properties.Settings.Default.FolderPath, RetrievedFolders.SelectedItem.ToString());
+            
+            EmailList = storageInterface.LoadJsonFiles(path);
+            
+
+
+            foreach (var item in EmailList)
+            {
+                //Create a listviewItem that contains items f
+                ListViewItem lvi = new ListViewItem(item.From);
+                lvi.SubItems.Add(item.Subject);
+                lvi.SubItems.Add(item.Date);
+
+                EmailListView.Items.Add(lvi);
+
+
+            }
         }
 
         private void RetrieveAllEmail_Click(object sender, EventArgs e)
@@ -92,6 +130,13 @@ namespace mailClient
             
             SendingEmail SendingEmail = new SendingEmail();
             SendingEmail.Show();           
+        }
+
+        private void EmailListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //show the Email selected in the EmailListView in the RecievedEmails textbox
+            RecievedEmails.Text = EmailList[EmailListView.SelectedIndices[0]].Body;
+            
         }
     }
 }

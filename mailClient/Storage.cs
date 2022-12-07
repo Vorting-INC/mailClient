@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace mailClient
 {
@@ -66,6 +69,22 @@ namespace mailClient
 
 
 
+        //Function that loads all the Json files from a folder in storage and stores them in a list of type MailListData
+        public List<EmailListData> LoadJsonFiles(string FolderPath)
+        {
+            List<EmailListData> EmailList = new List<EmailListData>();
+            string[] files = Directory.GetFiles(FolderPath);
+            foreach (string file in files)
+            {
+                if (Path.GetExtension(file) == ".json")
+                {
+                    string json = File.ReadAllText(file);
+                    EmailListData email = JsonConvert.DeserializeObject<EmailListData>(json);
+                    EmailList.Add(email);
+                }
+            }
+            return EmailList;
+        }
 
 
 

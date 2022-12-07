@@ -76,9 +76,12 @@ namespace mailClient
 
         private void AttachmentButton_Click(object sender, EventArgs e)
         {
-            AttachmentTextBox.Text = storage.OpenFileManager();
-            
-  
+            //Gets the path to the file.
+            openDialog.ShowDialog();
+            AttachmentTextBox.Text = openDialog.FileName;
+
+
+
         }
 
         private void SaveTheEmail_CheckedChanged(object sender, EventArgs e)

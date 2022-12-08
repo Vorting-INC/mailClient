@@ -30,7 +30,15 @@ namespace mailClient
         {
 
             InitializeComponent();
-            RetriveFoldersToListBox();
+            //retrive folders if local storage exist
+            if (Properties.Settings.Default.FolderPath != "" && Properties.Settings.Default.FolderPath != null)
+            {
+                storageInterface.RetrieveFolders();
+            }
+            
+                
+            
+            
 
      
         }
@@ -99,6 +107,17 @@ namespace mailClient
                 ListViewItem lvi = new ListViewItem(item.From);
                 lvi.SubItems.Add(item.Subject);
                 lvi.SubItems.Add(item.Date);
+                if (item.Seen == false)
+                {
+                    //make the text bold if the email is unread
+                    lvi.Font = new Font(lvi.Font, FontStyle.Bold);
+                    //lvi.BackColor = Color.LightBlue;
+                }
+                else
+                {
+                    //make the text normal if the email is read
+                    lvi.Font = new Font(lvi.Font, FontStyle.Regular);
+                }
 
                 EmailListView.Items.Add(lvi);
 

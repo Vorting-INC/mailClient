@@ -176,14 +176,27 @@ namespace mailClient
                         //Set the flag to seen
                         inbox.AddFlags(item.UniqueId, MessageFlags.Seen, true);
 
+                        
+
                         //create a new emailListdata clas to store the data in Json format
                         var email = new EmailListData();
                         email.From = item.Envelope.From.ToString();
-                        email.Subject = item.Envelope.Subject.ToString();
+                        //check if email has a subject
+                        if (item.Envelope.Subject != null)
+                        {
+                            email.Subject = item.Envelope.Subject.ToString();
+                        }
+                        else
+                        {
+                            email.Subject = "No Subject";
+                        }
                         email.Date = item.Date.ToString();
                         email.To = item.Envelope.To.ToString();
                         email.Cc = item.Envelope.Cc.ToString();
                         email.Bcc = item.Envelope.Bcc.ToString();
+
+                        //add flag as not seen
+                        email.Seen = false;
 
 
                         // get the body structure for the message
@@ -285,12 +298,22 @@ namespace mailClient
                     //Goes through each Email in the folder
                     foreach (var item in items)
                     {
-
-
-                        //add a seen flag to the mail so we know we dont have to download it again
-                        folder.AddFlags(item.UniqueId, MessageFlags.Seen, true);
                         //create a new emailListdata clas to store the data in Json format
                         var email = new EmailListData();
+                        
+                        if (!item.Flags.Value.HasFlag(MessageFlags.Seen))
+                        {
+                            //Set the flag to seen
+                            folder.AddFlags(item.UniqueId, MessageFlags.Seen, true);
+                            email.Seen = false;
+                        }
+                        else
+                        {
+                            email.Seen = true;
+                        }
+
+
+
                         email.From = item.Envelope.From.ToString();
 
                         //check if email has a subject

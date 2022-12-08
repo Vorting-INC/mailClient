@@ -16,6 +16,10 @@ namespace mailClient
         public EmailShow(EmailListData email)
         {
             InitializeComponent();
+
+            //Set flag to seen
+            email.Seen = true;
+
             //set the textboxes to the email data
             FromBox.Text = email.From;
             SubjectBox.Text = email.Subject;

@@ -19,5 +19,12 @@ namespace mailClient
         //Location of Attachment
         public string Attachment { get; set; }
 
+        //I have made to  Flag to be used in the EmailListData class
+        public bool Flag { get; set; }
+
+        public bool Seen { get; set; }
+
+
+
     }
 }

@@ -30,17 +30,34 @@ namespace mailClient
         {
 
             InitializeComponent();
+            //if its the first time logging in
+            if (Properties.Settings.Default.StorageCreated == false)
+            {
+                //Message show that yuor are a new user
+                MessageBox.Show("Welcome to Sigmamail, you will have to create local storage before use of the mail functionality");
+                //create local storage by opening create storage Form
+                CreateStorage createStorage = new CreateStorage();
+                createStorage.Show();
+
+
+                //Download all mails from server using function DownloadAllMails
+                mailFunctionality.DownloadAllEmails(Email, Password , Server);
+            }
+
             //retrive folders if local storage exist
             if (Properties.Settings.Default.FolderPath != "" && Properties.Settings.Default.FolderPath != null)
             {
-                storageInterface.RetrieveFolders();
+                //RetriveFolder list to box
+                RetriveFoldersToListBox();
+                //Get new emails from server
+                mailFunctionality.DownloadNewEmails(Email, Password, Server);
             }
-            
-                
-            
-            
 
-     
+
+
+
+
+
         }
 
 

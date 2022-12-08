@@ -38,10 +38,10 @@ namespace mailClient
                 //create local storage by opening create storage Form
                 CreateStorage createStorage = new CreateStorage();
                 createStorage.Show();
+                //when the create storage form is closed
+                
 
-
-                //Download all mails from server using function DownloadAllMails
-                mailFunctionality.DownloadAllEmails(Email, Password , Server);
+              
             }
 
             //retrive folders if local storage exist
@@ -54,7 +54,7 @@ namespace mailClient
             }
 
             //haha
-
+            //dui er til  mænd
 
 
 

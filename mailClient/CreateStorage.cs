@@ -45,6 +45,12 @@ namespace mailClient
                     Properties.Settings.Default["StorageCreated"] = true;
                     Properties.Settings.Default.Save();
 
+                    //download all folders and  new emails
+                    MailFunctionality mailFunctionality = new MailFunctionality();
+                    mailFunctionality.RetrieveFolders(Properties.Settings.Default.Email, Properties.Settings.Default.Password, Properties.Settings.Default.Server);
+                    mailFunctionality.DownloadNewEmails(Properties.Settings.Default.Email, Properties.Settings.Default.Password, Properties.Settings.Default.Server);
+
+                    //close form
                     this.Close();
                 }
                 else

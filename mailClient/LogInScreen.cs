@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace mailClient
 {
@@ -64,8 +65,11 @@ namespace mailClient
 
             //LoadingScreen loadingScreen = new LoadingScreen();
             //loadingScreen.Show();
-            
 
+            //add music to the loading screen
+            SoundPlayer player = new SoundPlayer(@"C:\Users\askvo\Downloads\grindset.wav");
+            player.Play();
+            
 
             if (mailFunctionality.LogIn(EmailAddressBox.Text, PasswordBox.Text, ServerBox.Text))
             {

@@ -44,9 +44,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(338, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(297, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(412, 314);
+            this.pictureBox1.Size = new System.Drawing.Size(406, 381);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -55,7 +55,7 @@
             // EmailAddressBox
             // 
             this.EmailAddressBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EmailAddressBox.Location = new System.Drawing.Point(250, 354);
+            this.EmailAddressBox.Location = new System.Drawing.Point(269, 442);
             this.EmailAddressBox.Name = "EmailAddressBox";
             this.EmailAddressBox.Size = new System.Drawing.Size(500, 30);
             this.EmailAddressBox.TabIndex = 1;
@@ -64,7 +64,7 @@
             // PasswordBox
             // 
             this.PasswordBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PasswordBox.Location = new System.Drawing.Point(250, 405);
+            this.PasswordBox.Location = new System.Drawing.Point(269, 493);
             this.PasswordBox.Name = "PasswordBox";
             this.PasswordBox.Size = new System.Drawing.Size(500, 30);
             this.PasswordBox.TabIndex = 2;
@@ -74,7 +74,7 @@
             // ServerBox
             // 
             this.ServerBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerBox.Location = new System.Drawing.Point(250, 452);
+            this.ServerBox.Location = new System.Drawing.Point(269, 540);
             this.ServerBox.Name = "ServerBox";
             this.ServerBox.Size = new System.Drawing.Size(500, 30);
             this.ServerBox.TabIndex = 3;
@@ -83,7 +83,7 @@
             // RememberCredentials
             // 
             this.RememberCredentials.AutoSize = true;
-            this.RememberCredentials.Location = new System.Drawing.Point(250, 499);
+            this.RememberCredentials.Location = new System.Drawing.Point(269, 587);
             this.RememberCredentials.Name = "RememberCredentials";
             this.RememberCredentials.Size = new System.Drawing.Size(100, 17);
             this.RememberCredentials.TabIndex = 4;
@@ -94,7 +94,7 @@
             // LogInBotton
             // 
             this.LogInBotton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogInBotton.Location = new System.Drawing.Point(425, 519);
+            this.LogInBotton.Location = new System.Drawing.Point(444, 607);
             this.LogInBotton.Name = "LogInBotton";
             this.LogInBotton.Size = new System.Drawing.Size(150, 50);
             this.LogInBotton.TabIndex = 5;
@@ -106,7 +106,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(184, 354);
+            this.label1.Location = new System.Drawing.Point(203, 442);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 25);
             this.label1.TabIndex = 6;
@@ -116,7 +116,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(146, 405);
+            this.label2.Location = new System.Drawing.Point(165, 493);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 25);
             this.label2.TabIndex = 7;
@@ -126,7 +126,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(174, 452);
+            this.label3.Location = new System.Drawing.Point(193, 540);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 25);
             this.label3.TabIndex = 8;
@@ -147,8 +147,9 @@
             this.Controls.Add(this.PasswordBox);
             this.Controls.Add(this.EmailAddressBox);
             this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LogInScreen";
-            this.Text = "LogIn";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.LogInScreen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

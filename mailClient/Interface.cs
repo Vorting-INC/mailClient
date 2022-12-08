@@ -30,6 +30,7 @@ namespace mailClient
         {
 
             InitializeComponent();
+            
             //if its the first time logging in
             if (Properties.Settings.Default.StorageCreated == false)
             {

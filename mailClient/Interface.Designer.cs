@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Interface));
             this.RetrieveNewEmail = new System.Windows.Forms.Button();
             this.RetrievedFolders = new System.Windows.Forms.ListBox();
             this.RetrieveAllEmail = new System.Windows.Forms.Button();
@@ -39,6 +40,8 @@
             this.Subject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Flag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // RetrieveNewEmail
@@ -56,9 +59,9 @@
             this.RetrievedFolders.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RetrievedFolders.FormattingEnabled = true;
             this.RetrievedFolders.ItemHeight = 25;
-            this.RetrievedFolders.Location = new System.Drawing.Point(12, 12);
+            this.RetrievedFolders.Location = new System.Drawing.Point(12, 162);
             this.RetrievedFolders.Name = "RetrievedFolders";
-            this.RetrievedFolders.Size = new System.Drawing.Size(125, 454);
+            this.RetrievedFolders.Size = new System.Drawing.Size(125, 304);
             this.RetrievedFolders.TabIndex = 2;
             this.RetrievedFolders.SelectedIndexChanged += new System.EventHandler(this.RetrievedFolders_SelectedIndexChanged);
             // 
@@ -105,13 +108,14 @@
             // 
             // EmailListView
             // 
+            this.EmailListView.BackColor = System.Drawing.SystemColors.Control;
             this.EmailListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.From,
             this.Subject,
             this.Date,
             this.Flag});
             this.EmailListView.HideSelection = false;
-            this.EmailListView.Location = new System.Drawing.Point(154, 12);
+            this.EmailListView.Location = new System.Drawing.Point(144, 12);
             this.EmailListView.Name = "EmailListView";
             this.EmailListView.Size = new System.Drawing.Size(676, 654);
             this.EmailListView.TabIndex = 7;
@@ -141,11 +145,22 @@
             this.Flag.Text = "Flag";
             this.Flag.Width = 82;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(125, 132);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(842, 683);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.EmailListView);
             this.Controls.Add(this.SendAnEmail);
             this.Controls.Add(this.CreateStorageButton);
@@ -153,9 +168,12 @@
             this.Controls.Add(this.RetrieveAllEmail);
             this.Controls.Add(this.RetrievedFolders);
             this.Controls.Add(this.RetrieveNewEmail);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Interface";
-            this.Text = "Form2";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "SigmaMail";
             this.Load += new System.EventHandler(this.Interface_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -173,5 +191,6 @@
         private System.Windows.Forms.ColumnHeader Subject;
         private System.Windows.Forms.ColumnHeader Date;
         private System.Windows.Forms.ColumnHeader Flag;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

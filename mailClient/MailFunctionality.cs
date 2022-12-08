@@ -94,7 +94,7 @@ namespace mailClient
         public async void SendEmail(EmailListData email, string Email, string Password, string Server)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Ask",Email));
+            message.From.Add(new MailboxAddress("",Email));
             message.To.Add(MailboxAddress.Parse(email.To));
             
             Console.WriteLine(email.To);
@@ -245,16 +245,21 @@ namespace mailClient
                                 email.Attachment = path;
                             }
                         }
+                        //create a string path to store the json data
+                        string subject = item.Envelope.Subject.ToString();
+                        string pathFolder = Properties.Settings.Default.FolderPath + "\\Inbox\\" + subject+"_"+item.UniqueId + ".json";
 
+                        //saves the Name of the file in the Json file itself
+                        email.JsonFileName = subject + "_" + item.UniqueId + ".json";
 
                         string jsonfile = JsonConvert.SerializeObject(email);
-                        string subject = item.Envelope.Subject.ToString();
+                        
                         //remove this charrackte :  from the string 
                         subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
 
 
 
-                        string pathFolder = Properties.Settings.Default.FolderPath + "\\Inbox\\" + subject+"_"+item.UniqueId + ".json";
+                        
                         
 
                         if (File.Exists(pathFolder))

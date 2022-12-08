@@ -25,7 +25,10 @@ namespace mailClient
         //add a global variable to hold the emails in the list
         List<EmailListData> EmailList = new List<EmailListData>();
 
-        
+
+        //string FileFolderPath that can remember the path of the folder we currently have open
+        string FileFolderPath = "";
+
         public Interface()
         {
 
@@ -77,6 +80,7 @@ namespace mailClient
             {
                 RetrievedFolders.Items.Add(Path.GetFileName(folder));
             }
+            
         }
 
         
@@ -116,8 +120,9 @@ namespace mailClient
             string path = Path.Combine(Properties.Settings.Default.FolderPath, RetrievedFolders.SelectedItem.ToString());
             
             EmailList = storageInterface.LoadJsonFiles(path);
-            
 
+            //Save the path of the folder we currently have open
+            FileFolderPath = path;
 
             foreach (var item in EmailList)
             {
@@ -131,7 +136,7 @@ namespace mailClient
                     lvi.Font = new Font(lvi.Font, FontStyle.Bold);
                     //lvi.BackColor = Color.LightBlue;
                 }
-                else
+                if( item.Seen == true)
                 {
                     //make the text normal if the email is read
                     lvi.Font = new Font(lvi.Font, FontStyle.Regular);
@@ -141,6 +146,8 @@ namespace mailClient
 
 
             }
+
+            
         }
 
         private void RetrieveAllEmail_Click(object sender, EventArgs e)
@@ -153,6 +160,8 @@ namespace mailClient
         {
             
             mailFunctionality.RetrieveFolders(Email, Password, Server);
+
+         
         }
 
         private void CreateStorageButton_Click(object sender, EventArgs e)
@@ -191,10 +200,29 @@ namespace mailClient
             //Opens a window to show the email selected in the form EmailShow
             var index = EmailListView.SelectedIndices[0];
             EmailShow emailShow = new EmailShow(EmailList[index]);
+
+            //show if the email is read in message box
+
+            bool Seen = EmailList[index].Seen;
+
+            MessageBox.Show(Seen.ToString());
+
+            //if email is not seen
+            if (Seen != true)
+            {
+
+                EmailList[index].Seen = true;
+                //Saves the email as read by calling the function SaveJsonFile and overwriting the current file
+
+                storageInterface.SaveJsonFile(EmailList[index], EmailList[index].JsonFileName, FileFolderPath);
+
+                MessageBox.Show("Email is now read and save to path" + FileFolderPath + "\\" + EmailList[index].JsonFileName);
+            }
+
             emailShow.Show();
 
         }
-
+        
         private void Interface_Load(object sender, EventArgs e)
         {
 
@@ -203,6 +231,17 @@ namespace mailClient
         private void EmailListView_SelectedIndexChanged_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            //reload the list box
+            RetrievedFolders.Items.Clear();
+            RetriveFoldersToListBox();
+
+            //and reload the emails in the listview
+            EmailListView.Items.Clear();
+            
         }
     }
 }

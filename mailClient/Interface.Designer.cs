@@ -41,6 +41,7 @@
             this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Flag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.RefreshButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -155,11 +156,22 @@
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Location = new System.Drawing.Point(39, 681);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(75, 23);
+            this.RefreshButton.TabIndex = 9;
+            this.RefreshButton.Text = "Refresh";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
+            // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 683);
+            this.ClientSize = new System.Drawing.Size(842, 732);
+            this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.EmailListView);
             this.Controls.Add(this.SendAnEmail);
@@ -192,5 +204,6 @@
         private System.Windows.Forms.ColumnHeader Date;
         private System.Windows.Forms.ColumnHeader Flag;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button RefreshButton;
     }
 }

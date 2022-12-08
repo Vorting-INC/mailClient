@@ -86,13 +86,31 @@ namespace mailClient
             return EmailList;
         }
 
-        
+
+        //function that takes a EmailListdata Object, a Json file name, and a path and saves it as a Json file
+        public void SaveJsonFile(EmailListData Email, string JsonFileName, string Path)
+        {
+            string jsonfile = JsonConvert.SerializeObject(Email, Formatting.Indented);
+            string FilePath = System.IO.Path.Combine(Path, JsonFileName);
+
+            if (File.Exists(FilePath))
+            {
+                File.Delete(FilePath);
+            }
+            
+            using (var tw = new StreamWriter(FilePath, true))
+            {
+                tw.WriteLine(jsonfile.ToString());
+                tw.Close();
+            }
+        }
+
        
 
 
+        
 
-
-
-    }
+        
+        }
 
 }

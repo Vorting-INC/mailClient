@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="EmailListData.cs" />
     <Compile Include="EmailShow.cs">
       <SubType>Form</SubType>
@@ -100,6 +101,13 @@
     </Compile>
     <Compile Include="CreateStorage.Designer.cs">
       <DependentUpon>CreateStorage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Filters.cs" />
+    <Compile Include="Loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loading.Designer.cs">
+      <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
     <Compile Include="Interface.cs">
       <SubType>Form</SubType>
@@ -128,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EmailShow.resx">
       <DependentUpon>EmailShow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loading.resx">
+      <DependentUpon>Loading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interface.resx">
       <DependentUpon>Interface.cs</DependentUpon>
@@ -161,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\patrickbatemanwalking.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

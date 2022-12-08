@@ -130,3 +130,4 @@ C:\Users\askvo\Documents\GitHub\mailClient\mailClient\obj\Debug\EmailClient.cspr
 C:\Users\askvo\Documents\GitHub\mailClient\mailClient\obj\Debug\EmailClient.csproj.CopyComplete
 C:\Users\askvo\Documents\GitHub\mailClient\mailClient\obj\Debug\mailClient.exe
 C:\Users\askvo\Documents\GitHub\mailClient\mailClient\obj\Debug\mailClient.pdb
+C:\Users\askvo\Documents\GitHub\mailClient\mailClient\obj\Debug\mailClient.Loading.resources

@@ -41,6 +41,7 @@
             this.AttachmentTextBox = new System.Windows.Forms.TextBox();
             this.AttachmentLabel = new System.Windows.Forms.Label();
             this.SaveTheEmail = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // ToLabel
@@ -140,6 +141,7 @@
             this.AttachmentTextBox.Name = "AttachmentTextBox";
             this.AttachmentTextBox.Size = new System.Drawing.Size(543, 20);
             this.AttachmentTextBox.TabIndex = 10;
+            this.AttachmentTextBox.TextChanged += new System.EventHandler(this.AttachmentTextBox_TextChanged);
             // 
             // AttachmentLabel
             // 
@@ -165,11 +167,23 @@
             this.SaveTheEmail.UseVisualStyleBackColor = true;
             this.SaveTheEmail.CheckedChanged += new System.EventHandler(this.SaveTheEmail_CheckedChanged);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(278, 506);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(73, 17);
+            this.checkBox1.TabIndex = 14;
+            this.checkBox1.Text = "Snap Mail";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+            // 
             // SendingEmail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 618);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.SaveTheEmail);
             this.Controls.Add(this.AttachmentLabel);
             this.Controls.Add(this.AttachmentTextBox);
@@ -206,5 +220,6 @@
         private System.Windows.Forms.TextBox AttachmentTextBox;
         private System.Windows.Forms.Label AttachmentLabel;
         private System.Windows.Forms.CheckBox SaveTheEmail;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

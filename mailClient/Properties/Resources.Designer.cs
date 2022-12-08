@@ -77,5 +77,15 @@ namespace mailClient.Properties {
                 return ResourceManager.GetString("FolderPathAttachments", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap patrickbatemanwalking {
+            get {
+                object obj = ResourceManager.GetObject("patrickbatemanwalking", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

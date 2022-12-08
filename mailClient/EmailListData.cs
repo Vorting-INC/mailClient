@@ -24,6 +24,7 @@ namespace mailClient
 
         public bool Seen { get; set; }
 
+        public bool Snap { get; set; }
 
 
     }

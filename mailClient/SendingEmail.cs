@@ -45,10 +45,18 @@ namespace mailClient
             NewEmail.From = Properties.Settings.Default.Email;
             NewEmail.To = EmailTextBox.Text;
             NewEmail.Subject = SubjectTextBox.Text;
-            NewEmail.Body = BodyRichTextBox.Text;
+            
             NewEmail.Cc = CCTextBox.Text;
             NewEmail.Attachment = AttachmentTextBox.Text;
-            
+            if (checkBox1.Checked == true)
+            {
+                NewEmail.Body = "%%SNAPMAIL%% \n" + BodyRichTextBox.Text;          
+            }
+            else
+            {
+                NewEmail.Body = BodyRichTextBox.Text;
+            }
+          
 
             //send the email
             mailFunctionality.SendEmailTest(NewEmail, Email, Password, Server);
@@ -87,6 +95,21 @@ namespace mailClient
         private void SaveTheEmail_CheckedChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AttachmentTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

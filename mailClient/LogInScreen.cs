@@ -67,9 +67,12 @@ namespace mailClient
             //loadingScreen.Show();
 
             //add music to the loading screen
-            SoundPlayer player = new SoundPlayer(@"C:\Users\askvo\Downloads\grindset.wav");
+            SoundPlayer player = new SoundPlayer(@"C:\Users\askvo\Downloads\grindsetvokal.wav");
             player.Play();
-            
+            this.Hide();
+                
+
+            SplashForm.ShowSplashScreen();
 
             if (mailFunctionality.LogIn(EmailAddressBox.Text, PasswordBox.Text, ServerBox.Text))
             {
@@ -80,9 +83,10 @@ namespace mailClient
                 Properties.Settings.Default.Save();
                 
                 
-                this.Hide();
+                
                 
                 Interface Interface = new Interface();
+                SplashForm.CloseForm();
                 Interface.Show();
                 
                 //check if storage was created prior
@@ -102,7 +106,8 @@ namespace mailClient
             }
             else
             {
-                
+                    SplashForm.CloseForm();
+                this.Show();
                 MessageBox.Show("Wrong Email, Password or Server");
                 
             }

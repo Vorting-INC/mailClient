@@ -67,8 +67,11 @@ namespace mailClient
             //loadingScreen.Show();
 
             //add music to the loading screen
-            SoundPlayer player = new SoundPlayer(@"C:\Users\askvo\Downloads\grindsetvokal.wav");
-            player.Play();
+            SoundPlayer sndplayr = new
+
+             SoundPlayer(mailClient.Properties.Resources.grindsetvokal);
+
+            sndplayr.Play();
             this.Hide();
                 
 

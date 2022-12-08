@@ -176,5 +176,8 @@
   <ItemGroup>
     <None Include="Resources\patrickbatemanwalking.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\grindsetvokal.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

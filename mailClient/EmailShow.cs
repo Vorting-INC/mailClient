@@ -12,13 +12,15 @@ namespace mailClient
 {
     public partial class EmailShow : Form
     {
+
+        EmailListData NewEmail = new EmailListData();
+
         //constructer that takes in the email data
         public EmailShow(EmailListData email)
         {
             InitializeComponent();
 
-            //Set flag to seen
-            email.Seen = true;
+            
 
             //set the textboxes to the email data
             FromBox.Text = email.From;
@@ -37,6 +39,7 @@ namespace mailClient
                     pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
             }
+            NewEmail = email;
 
         }
 
@@ -77,6 +80,26 @@ namespace mailClient
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ReplyButton_Click(object sender, EventArgs e)
+        {
+            //Reply to the email
+            //construct form sending email
+            SendingEmail sendingEmail = new SendingEmail(NewEmail, "reply");
+            //show the form
+            sendingEmail.Show();
+            //close the current form
+            this.Close();
+        }
+
+        private void ForwardButton_Click(object sender, EventArgs e)
+        {
+            SendingEmail sendingEmail = new SendingEmail(NewEmail, "forward");
+            //show the form
+            sendingEmail.Show();
+            //close the current form
+            this.Close();
         }
     }
 }

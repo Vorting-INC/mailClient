@@ -240,9 +240,11 @@ namespace mailClient
         {
             //Opens a window to show the email selected in the form EmailShow
             var index = EmailListView.SelectedIndices[0];
+
+            //constructs the form emailShow
             EmailShow emailShow = new EmailShow(EmailList[index]);
 
-            //show if the email is read in message box
+           
 
 
            

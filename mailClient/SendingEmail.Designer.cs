@@ -96,6 +96,7 @@
             this.BodyRichTextBox.Size = new System.Drawing.Size(647, 314);
             this.BodyRichTextBox.TabIndex = 5;
             this.BodyRichTextBox.Text = "";
+            this.BodyRichTextBox.TextChanged += new System.EventHandler(this.BodyRichTextBox_TextChanged);
             // 
             // SendButton
             // 

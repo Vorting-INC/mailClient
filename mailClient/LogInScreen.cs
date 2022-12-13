@@ -71,9 +71,12 @@ namespace mailClient
 
              SoundPlayer(mailClient.Properties.Resources.grindsetvokal);
 
-            sndplayr.Play();
+            //sndplayr.Play();
+           
             this.Hide();
+            
                 
+
 
             SplashForm.ShowSplashScreen();
 

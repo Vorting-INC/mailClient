@@ -24,7 +24,8 @@ namespace mailClient
         StorageInterface storageInterface = new StorageInterface();
         //add a global variable to hold the emails in the list
         List<EmailListData> EmailList = new List<EmailListData>();
-
+        
+        int MailIndex;
 
         //string FileFolderPath that can remember the path of the folder we currently have open
         string FileFolderPath = "";
@@ -130,13 +131,14 @@ namespace mailClient
                 ListViewItem lvi = new ListViewItem(item.From);
                 lvi.SubItems.Add(item.Subject);
                 lvi.SubItems.Add(item.Date);
-                if (item.Seen == false)
+                
+                if (item.EmailIsSeen == false)
                 {
                     //make the text bold if the email is unread
                     lvi.Font = new Font(lvi.Font, FontStyle.Bold);
                     //lvi.BackColor = Color.LightBlue;
                 }
-                if( item.Seen == true)
+                if( item.EmailIsSeen == true)
                 {
                     //make the text normal if the email is read
                     lvi.Font = new Font(lvi.Font, FontStyle.Regular);
@@ -149,6 +151,35 @@ namespace mailClient
 
             
         }
+
+        //function that loads the EmailListView
+        private void LoadEmailListView()
+        {
+            //clear the EmailListView
+            EmailListView.Items.Clear();
+
+            foreach (var item in EmailList)
+            {
+                //Create a listviewItem that contains items f
+                ListViewItem lvi = new ListViewItem(item.From);
+                lvi.SubItems.Add(item.Subject);
+                lvi.SubItems.Add(item.Date);
+
+                if (item.EmailIsSeen == false)
+                {
+                    //make the text bold if the email is unread
+                    lvi.Font = new Font(lvi.Font, FontStyle.Bold);
+                    //lvi.BackColor = Color.LightBlue;
+                }
+                if (item.EmailIsSeen == true)
+                {
+                    //make the text normal if the email is read
+                    lvi.Font = new Font(lvi.Font, FontStyle.Regular);
+                }
+
+                EmailListView.Items.Add(lvi);
+            }
+        }   
 
         private void RetrieveAllEmail_Click(object sender, EventArgs e)
         {
@@ -189,12 +220,22 @@ namespace mailClient
         private void EmailListView_MouseClick(object sender, MouseEventArgs e)
         {
             //get the selected item in the listview
-            var index = EmailListView.SelectedIndices[0];
+            MailIndex = EmailListView.SelectedIndices[0];
             
             //show the Email selected in the EmailListView in the RecievedEmails textbox
             
         }
-
+        
+        
+        //function that update the EmailIsSeen property in the EmailListData object by taking the index of the selected item in the EmailListView and if it is seen or not
+        public void UpdateEmailIsSeen(int index, bool EmailIsSeen)
+            {
+                EmailList[index].EmailIsSeen = EmailIsSeen;
+           
+            
+            storageInterface.SaveJsonFile(EmailList[index], EmailList[index].JsonFileName, FileFolderPath);
+            }
+        
         private void EmailListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             //Opens a window to show the email selected in the form EmailShow
@@ -203,26 +244,36 @@ namespace mailClient
 
             //show if the email is read in message box
 
-            bool Seen = EmailList[index].Seen;
 
-            MessageBox.Show(Seen.ToString());
-
-            //if email is not seen
-            if (Seen != true)
+           
+            //if its a snapmail is should deleted when opened
+            if (EmailList[index].Snap == true)
             {
-
-                EmailList[index].Seen = true;
-                //Saves the email as read by calling the function SaveJsonFile and overwriting the current file
-
-                storageInterface.SaveJsonFile(EmailList[index], EmailList[index].JsonFileName, FileFolderPath);
-
-                MessageBox.Show("Email is now read and save to path" + FileFolderPath + "\\" + EmailList[index].JsonFileName);
+                //delete the email
+                storageInterface.DeleteJsonFile(EmailList[index].JsonFileName, FileFolderPath);
+                //remove the email from the EmailList
+                EmailList.RemoveAt(index);
+                //reload the EmailListView
+                LoadEmailListView();
+            }
+            //if email is not seen
+            else if(EmailList[index].EmailIsSeen == false)
+            {
+                UpdateEmailIsSeen(index, true);
             }
 
-            emailShow.Show();
+            
 
+            emailShow.Show();
+            
         }
+
         
+        
+
+
+
+
         private void Interface_Load(object sender, EventArgs e)
         {
 
@@ -242,6 +293,23 @@ namespace mailClient
             //and reload the emails in the listview
             EmailListView.Items.Clear();
             
+        }
+
+        private void SeenButton_Click(object sender, EventArgs e)
+        {
+            //change the email to seen or unseen depending on its current state
+            
+            if (EmailList[MailIndex].EmailIsSeen == true)
+            {
+                UpdateEmailIsSeen(MailIndex, false);
+            }
+            else
+            {
+                UpdateEmailIsSeen(MailIndex, true);
+            }
+            //then update email listview
+            LoadEmailListView();
+
         }
     }
 }

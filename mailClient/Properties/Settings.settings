@@ -23,5 +23,11 @@
     <Setting Name="StorageCreated" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="FolderPathSnapMail" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SpamWords" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sales tilbud</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -15,22 +15,31 @@ namespace mailClient
 
         string FileFolderPath = "";
         string FileFOlderPathAttachments = "";
+        string FileFolderPathSnapMail = "";
 
         //creates a folder in the storage
         public void CreateFolder(string FolderName, string Location)
         {
-
+            //creates a generel purpose folder for storage
             string path = System.IO.Path.Combine(Location, FolderName);
             System.IO.Directory.CreateDirectory(path);
+            //creates a folder for attachments
             string pathAttachments = System.IO.Path.Combine(path, "Attachments");
             System.IO.Directory.CreateDirectory(pathAttachments);
+            //creates a folder for snapmail
+            string pathSnapMail = System.IO.Path.Combine(path, "Snapmail");
+            System.IO.Directory.CreateDirectory(pathSnapMail);
+
+
+
             MessageBox.Show("Successfully created a folder");
 
             FileFolderPath = path;
-            FileFOlderPathAttachments = pathAttachments;           
+            FileFOlderPathAttachments = pathAttachments;
+            FileFolderPathSnapMail = pathSnapMail;
 
         }
-        
+
 
 
         //create a file in storage
@@ -43,18 +52,20 @@ namespace mailClient
             }
         }
 
+        //get the path of the folder from the local storage on a computer by user input
         public string OpenFileManager()
         {
             FolderBrowserDialog FBD = new FolderBrowserDialog();
-            
+
             if (FBD.ShowDialog() == DialogResult.OK)
-                    {
-                        FileFolderPath = FBD.SelectedPath;
-                    }
-                     FileFolderPath = FBD.SelectedPath;
+            {
+                FileFolderPath = FBD.SelectedPath;
+            }
+            FileFolderPath = FBD.SelectedPath;
 
             return FBD.SelectedPath;
         }
+
 
         public string GetFileFolderPath()
         {
@@ -65,6 +76,11 @@ namespace mailClient
         {
 
             return FileFOlderPathAttachments;
+        }
+
+        public string GetFileFolderPathSnapMail()
+        {
+            return FileFolderPathSnapMail;
         }
 
 
@@ -90,6 +106,7 @@ namespace mailClient
         //function that takes a EmailListdata Object, a Json file name, and a path and saves it as a Json file
         public void SaveJsonFile(EmailListData Email, string JsonFileName, string Path)
         {
+
             string jsonfile = JsonConvert.SerializeObject(Email, Formatting.Indented);
             string FilePath = System.IO.Path.Combine(Path, JsonFileName);
 
@@ -97,7 +114,7 @@ namespace mailClient
             {
                 File.Delete(FilePath);
             }
-            
+
             using (var tw = new StreamWriter(FilePath, true))
             {
                 tw.WriteLine(jsonfile.ToString());
@@ -105,12 +122,22 @@ namespace mailClient
             }
         }
 
-       
+        //function the deletes a Json file from storage
+        public void DeleteJsonFile(string JsonFileName, string Path)
+        {
+            string FilePath = System.IO.Path.Combine(Path, JsonFileName);
+           
+            if (File.Exists(FilePath))
+            {
+                File.Delete(FilePath);
+            }
 
 
-        
 
-        
+
+
+
+
         }
-
+    }
 }

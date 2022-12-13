@@ -106,5 +106,29 @@ namespace mailClient.Properties {
                 this["StorageCreated"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FolderPathSnapMail {
+            get {
+                return ((string)(this["FolderPathSnapMail"]));
+            }
+            set {
+                this["FolderPathSnapMail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sales tilbud")]
+        public string SpamWords {
+            get {
+                return ((string)(this["SpamWords"]));
+            }
+            set {
+                this["SpamWords"] = value;
+            }
+        }
     }
 }

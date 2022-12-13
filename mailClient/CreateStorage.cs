@@ -38,10 +38,11 @@ namespace mailClient
                     //This get the two path from the storage class
                     string FileFolderPath = Storage.GetFileFolderPath();
                     string FileFolderPathAttachments = Storage.GetFileFolderPathAttachments();
-
+                    
                     //saves the path in the setting
                     Properties.Settings.Default["FolderPath"] = FileFolderPath;
                     Properties.Settings.Default["FolderPathAttachments"] = FileFolderPathAttachments;
+                    Properties.Settings.Default["FolderPathSnapMail"] = Storage.GetFileFolderPathSnapMail();
                     Properties.Settings.Default["StorageCreated"] = true;
                     Properties.Settings.Default.Save();
 

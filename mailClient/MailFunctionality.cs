@@ -18,8 +18,9 @@ namespace mailClient
 {
     internal class MailFunctionality
     {
-    
-           
+        //creates a instance of the storage interface
+        StorageInterface StorageInterface = new StorageInterface();
+
 
 
 
@@ -173,13 +174,16 @@ namespace mailClient
                 {
                     if (!item.Flags.Value.HasFlag(MessageFlags.Seen))
                     {
+                        
                         //Set the flag to seen
                         inbox.AddFlags(item.UniqueId, MessageFlags.Seen, true);
 
-                        
-
                         //create a new emailListdata clas to store the data in Json format
                         var email = new EmailListData();
+
+                        //save the UniqueId of the email
+                        email.UniqueID = item.UniqueId.ToString();
+
                         email.From = item.Envelope.From.ToString();
                         //check if email has a subject
                         if (item.Envelope.Subject != null)
@@ -195,9 +199,9 @@ namespace mailClient
                         email.Cc = item.Envelope.Cc.ToString();
                         email.Bcc = item.Envelope.Bcc.ToString();
 
-                        //add flag as not seen
-                        email.Seen = false;
+                        
 
+                    
 
                         // get the body structure for the message
                         // IMessageSummary.TextBody is a convenience property that finds the 'text/plain' body part for us
@@ -245,21 +249,90 @@ namespace mailClient
                                 email.Attachment = path;
                             }
                         }
+
+                        //remove unwanted charrects from the subject
+                        string subject = email.Subject;
+                        subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
+                        string FileName = subject + item.UniqueId + ".json";
+
+
+                        //Now its time to deside where to save the file
+                        string FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "Inbox");
+
+                        //check if there is a inbox folder else create it
+                        if (!Directory.Exists(FolderPath))
+                        {
+                            Directory.CreateDirectory(FolderPath);
+                        }
+
+
+                        
+                        string[] SpamWords = Properties.Settings.Default.SpamWords.Split(',');
+                        //check if the email is spam
+
+                        string SpamBody = email.Body.ToLower();
+                        if (SpamWords.Any(SpamBody.Contains))
+                        {
+                            FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "Junk");
+                            //check if the folder exists
+                            if (!Directory.Exists(FolderPath))
+                            {
+                                Directory.CreateDirectory(FolderPath);
+                            }
+                            
+                            
+                        }
+
+                        //check if the mail is a SnapMail
+                        if (email.Body.Contains("%%SNAPMAIL%%"))
+                        {
+                            FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "SnapMail");
+                            //check if the folder exists
+                            if (!Directory.Exists(FolderPath))
+                            {
+                                Directory.CreateDirectory(FolderPath);
+                            }
+                            //save the file in the spam folder
+                            
+
+                            //set boolean snapmail to true
+                            email.Snap = true;
+
+                            //remove the snapmail tag from the body
+                            email.Body = email.Body.Replace("%%SNAPMAIL%%", "");
+
+                            //delete the email from the server so it wont be downloaded again
+                            client.Inbox.AddFlags(item.UniqueId, MessageFlags.Deleted, true);
+                            client.Inbox.Expunge();
+
+
+                        }
+                        email.JsonFileName = FileName;
+                        //save the file tp the folderPath using storageInterface
+                        StorageInterface.SaveJsonFile(email , FileName, FolderPath);
+
+
+
+                        
+
+
+
+
+
+
+                        /*
                         //create a string path to store the json data
                         string subject = item.Envelope.Subject.ToString();
                         string pathFolder = Properties.Settings.Default.FolderPath + "\\Inbox\\" + subject+"_"+item.UniqueId + ".json";
 
                         //saves the Name of the file in the Json file itself
-                        email.JsonFileName = subject + "_" + item.UniqueId + ".json";
+                        
 
                         string jsonfile = JsonConvert.SerializeObject(email);
                         
                         //remove this charrackte :  from the string 
                         subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
 
-
-
-                        
                         
 
                         if (File.Exists(pathFolder))
@@ -273,6 +346,7 @@ namespace mailClient
                             tw.WriteLine(jsonfile.ToString());
                             tw.Close();
                         }
+                        */
                     }
                 }
                 
@@ -310,14 +384,14 @@ namespace mailClient
                         {
                             //Set the flag to seen
                             folder.AddFlags(item.UniqueId, MessageFlags.Seen, true);
-                            email.Seen = false;
+                            email.EmailIsSeen = false;
                         }
                         else
                         {
-                            email.Seen = true;
+                            email.EmailIsSeen = true;
                         }
 
-
+                        email.UniqueID = item.UniqueId.ToString();
 
                         email.From = item.Envelope.From.ToString();
 
@@ -396,6 +470,19 @@ namespace mailClient
                             }
                         }
 
+                        //remove unwanted charrects from the subject
+                        string subject = email.Subject;
+                        subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
+                        string FileName = subject + item.UniqueId + ".json";
+
+                        email.JsonFileName = FileName;
+                        
+                        string PathFolder = Path.Combine(Properties.Settings.Default.FolderPath, folder.Name);
+                        //save the file tp the folderPath using storageInterface
+                        StorageInterface.SaveJsonFile(email, FileName, PathFolder);
+
+
+                        /*
                         string jsonfile = JsonConvert.SerializeObject(email);
                         
                         string subject = email.Subject;
@@ -414,7 +501,7 @@ namespace mailClient
                         {
                             tw.WriteLine(jsonfile.ToString());
                             tw.Close();
-                        }
+                        }*/
 
 
 

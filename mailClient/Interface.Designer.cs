@@ -42,6 +42,7 @@
             this.Flag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.RefreshButton = new System.Windows.Forms.Button();
+            this.SeenButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,7 +117,7 @@
             this.Date,
             this.Flag});
             this.EmailListView.HideSelection = false;
-            this.EmailListView.Location = new System.Drawing.Point(144, 12);
+            this.EmailListView.Location = new System.Drawing.Point(154, 12);
             this.EmailListView.Name = "EmailListView";
             this.EmailListView.Size = new System.Drawing.Size(676, 654);
             this.EmailListView.TabIndex = 7;
@@ -166,11 +167,22 @@
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
+            // SeenButton
+            // 
+            this.SeenButton.Location = new System.Drawing.Point(167, 680);
+            this.SeenButton.Name = "SeenButton";
+            this.SeenButton.Size = new System.Drawing.Size(75, 23);
+            this.SeenButton.TabIndex = 10;
+            this.SeenButton.Text = "Seen/Unseen";
+            this.SeenButton.UseVisualStyleBackColor = true;
+            this.SeenButton.Click += new System.EventHandler(this.SeenButton_Click);
+            // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(842, 732);
+            this.Controls.Add(this.SeenButton);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.EmailListView);
@@ -205,5 +217,6 @@
         private System.Windows.Forms.ColumnHeader Flag;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button RefreshButton;
+        private System.Windows.Forms.Button SeenButton;
     }
 }

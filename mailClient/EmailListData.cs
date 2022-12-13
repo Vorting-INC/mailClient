@@ -27,10 +27,11 @@ namespace mailClient
 
         public bool Seen { get; set; }
 
-        public bool Snap { get; set; 
-        
-        }
+        public bool Snap { get; set; }
 
+        //To save the unique ID of the email
+        public string UniqueID { get; set; }
 
+        public bool EmailIsSeen { get; set; }
     }
 }

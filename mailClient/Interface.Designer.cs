@@ -121,9 +121,11 @@
             this.EmailListView.Location = new System.Drawing.Point(154, 12);
             this.EmailListView.Name = "EmailListView";
             this.EmailListView.Size = new System.Drawing.Size(676, 654);
+            this.EmailListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.EmailListView.TabIndex = 7;
             this.EmailListView.UseCompatibleStateImageBehavior = false;
             this.EmailListView.View = System.Windows.Forms.View.Details;
+            this.EmailListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.EmailListView_ColumnClick);
             this.EmailListView.SelectedIndexChanged += new System.EventHandler(this.EmailListView_SelectedIndexChanged_1);
             this.EmailListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.EmailListView_MouseClick);
             this.EmailListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EmailListView_MouseDoubleClick);

@@ -18,6 +18,10 @@ namespace mailClient
         StorageInterface storage = new StorageInterface();
         OpenFileDialog openDialog = new OpenFileDialog();
 
+        //load in contact list
+        List<ContactListData> contactList = new List<ContactListData>();
+        
+
         string Email = Properties.Settings.Default.Email;
         string Password = Properties.Settings.Default.Password;
         string Server = Properties.Settings.Default.Server;
@@ -25,9 +29,12 @@ namespace mailClient
         public SendingEmail()
         {
             InitializeComponent();
-            
-            
-            
+            RetriveContactList();
+            InsertContactsIntoComboBox();
+
+
+
+
 
 
 
@@ -70,10 +77,36 @@ namespace mailClient
                 BodyRichTextBox.Text = body;                
             }
         }
-        
-       
 
-     
+        //function that retrives the contact list from the storage
+        public void RetriveContactList()
+        {
+            //clear the contact list
+            contactList.Clear();
+            //get the contact list from the storage
+            contactList = storage.LoadJsonFilesContacts(@"C:\\Users\\askvo\\Desktop\\EmailTestStorage\\Contacts");
+        }
+
+        //insert the contacts into the contact Combo box
+        public void InsertContactsIntoComboBox()
+        {
+            //clear the combo box
+            ContactComboBox.Items.Clear();
+            //for each contact in the contact list
+            foreach (ContactListData contact in contactList)
+            {
+                //add the contact name to the combo box
+                ContactComboBox.Items.Add(contact.Name);
+            }
+        }
+
+        //function that adds the selected contact to the to box on click
+        private void ContactComboBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            
+            
+        }
+
 
 
         private void Sending_an_Load(object sender, EventArgs e)
@@ -156,6 +189,32 @@ namespace mailClient
         private void BodyRichTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ContactBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void v(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ContactComboBox_Click(object sender, EventArgs e)
+        {
+            if (ContactComboBox.SelectedItem != null)
+            {
+                //adds the email from selected contact to the to box
+                EmailTextBox.Text = contactList[ContactComboBox.SelectedIndex].Email;
+                //add the name
+                NameBox.Text = contactList[ContactComboBox.SelectedIndex].Name;
+            }
         }
     }
 }

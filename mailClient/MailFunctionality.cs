@@ -13,6 +13,7 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace mailClient
 {
@@ -46,9 +47,35 @@ namespace mailClient
             
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("", Email));
-            message.To.Add(new MailboxAddress("", email.To));
+
+            MessageBox.Show(email.To.Contains("<").ToString() + email.To.ToString());
+            //If the mail is on the form of Mimecit with < and > in the email
+            if (email.To.Contains("<"))
+            {
+                //gets the name from the email
+                string name = email.To.Substring(0, email.To.IndexOf("<"));
+                //gets the email from the email
+                string emailTo = email.To.Substring(email.To.IndexOf("<") + 1, email.To.IndexOf(">") - email.To.IndexOf("<") - 1);
+                MessageBox.Show(emailTo.ToString());
+                message.To.Add(new MailboxAddress(name, emailTo));
+            }
+            
+            //if there a name with the mail
+            else if (email.ToName != "" && email.ToName != null)
+            {
+                message.To.Add(new MailboxAddress(email.ToName, email.To));
+            }
+            //if there no name with the mail
+            else
+            {
+                message.To.Add(new MailboxAddress("", email.To));
+            }
+           
+
+
             message.Subject = email.Subject;
             message.Body = new TextPart("plain")
+            
             
             {
                 Text = email.Body
@@ -96,6 +123,26 @@ namespace mailClient
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("",Email));
+
+            //send email with name 
+            if (email.To.Contains("<"))
+            {
+                //gets the name from the email
+                string name = email.To.Substring(0, email.To.IndexOf("<"));
+                //gets the email from the email
+                string emailTo = email.To.Substring(email.To.IndexOf("<") + 1, email.To.IndexOf(">") - email.To.IndexOf("<") - 1);
+                message.To.Add(new MailboxAddress(name, emailTo));
+            }
+            if (email.ToName != "")
+            {
+                message.To.Add(new MailboxAddress(email.ToName, email.To));
+            }
+            else
+            {
+                message.To.Add(new MailboxAddress("", email.To));
+            }
+           
+
             message.To.Add(MailboxAddress.Parse(email.To));
             
             Console.WriteLine(email.To);

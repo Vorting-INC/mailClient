@@ -102,6 +102,24 @@ namespace mailClient
             return EmailList;
         }
 
+        //Function that loads all the Json files from a folder in storage and stores them in a list of type ContactListData
+        public List<ContactListData> LoadJsonFilesContacts(string FolderPath)
+        {
+            List<ContactListData> ContactList = new List<ContactListData>();
+            string[] files = Directory.GetFiles(FolderPath);
+            foreach (string file in files)
+            {
+                if (Path.GetExtension(file) == ".json")
+                {
+                    string json = File.ReadAllText(file);
+                    ContactListData contact = JsonConvert.DeserializeObject<ContactListData>(json);
+                    ContactList.Add(contact);
+                }
+            }
+            return ContactList;
+        }
+
+
 
         //function that takes a EmailListdata Object, a Json file name, and a path and saves it as a Json file
         public void SaveJsonFile(EmailListData Email, string JsonFileName, string Path)

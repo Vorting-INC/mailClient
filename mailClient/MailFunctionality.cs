@@ -46,9 +46,9 @@ namespace mailClient
         {
             
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("", Email));
+            message.From.Add(new MailboxAddress("*", Email));
 
-            MessageBox.Show(email.To.Contains("<").ToString() + email.To.ToString());
+            
             //If the mail is on the form of Mimecit with < and > in the email
             if (email.To.Contains("<"))
             {
@@ -56,7 +56,7 @@ namespace mailClient
                 string name = email.To.Substring(0, email.To.IndexOf("<"));
                 //gets the email from the email
                 string emailTo = email.To.Substring(email.To.IndexOf("<") + 1, email.To.IndexOf(">") - email.To.IndexOf("<") - 1);
-                MessageBox.Show(emailTo.ToString());
+                
                 message.To.Add(new MailboxAddress(name, emailTo));
             }
             

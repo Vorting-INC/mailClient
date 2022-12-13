@@ -69,9 +69,9 @@ namespace mailClient
             //add music to the loading screen
             SoundPlayer sndplayr = new
 
-             SoundPlayer(mailClient.Properties.Resources.grindsetvokal);
+            SoundPlayer(mailClient.Properties.Resources.grindsetvokal);
 
-            //sndplayr.Play();
+            sndplayr.Play();
            
             this.Hide();
             

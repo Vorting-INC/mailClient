@@ -31,19 +31,14 @@ namespace mailClient
             InitializeComponent();
             RetriveContactList();
             InsertContactsIntoComboBox();
-
-
-
-
-
-
-
         }
 
         //constructer that takes an email and sets the to box to it
         public SendingEmail(EmailListData email, string type)
         {
             InitializeComponent();
+            RetriveContactList();
+            InsertContactsIntoComboBox();
             //if its a reply
             if (type == "reply")
             {

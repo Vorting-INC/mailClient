@@ -79,7 +79,14 @@ namespace mailClient
             string[] folders = Directory.GetDirectories(Properties.Settings.Default.FolderPath);
             foreach (string folder in folders)
             {
-                RetrievedFolders.Items.Add(Path.GetFileName(folder));
+                //do not add attachments and Contacts folder to the listbox
+                if (folder != Properties.Settings.Default.FolderPath + "\\Attachments" && folder != Properties.Settings.Default.FolderPath + "\\Contacts")
+                {
+                    //add the folder name to the listbox
+                    RetrievedFolders.Items.Add(Path.GetFileName(folder));
+                }
+
+              
             }
             
         }
@@ -311,6 +318,39 @@ namespace mailClient
             }
             //then update email listview
             LoadEmailListView();
+
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            //if email is already in junk folder delete the email
+            if (RetrievedFolders.SelectedItem.ToString() == "Junk")
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to permanently delete this email?", "Delete Email", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    //delete the email
+                    storageInterface.DeleteJsonFile(EmailList[MailIndex].JsonFileName, FileFolderPath);
+                    //remove the email from the EmailList
+                    EmailList.RemoveAt(MailIndex);
+                    //reload the EmailListView
+                    LoadEmailListView();
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //do nothing
+                }            
+            }
+            else
+            {
+                //Move the selected email to the junk folder
+                storageInterface.MoveFile(EmailList[MailIndex].JsonFileName, FileFolderPath, Properties.Settings.Default.FolderPath + "\\" + "Junk");
+                //reload listview
+                EmailList.RemoveAt(MailIndex);
+                LoadEmailListView();
+            }
+            
+
 
         }
     }

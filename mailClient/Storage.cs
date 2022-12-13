@@ -122,7 +122,7 @@ namespace mailClient
 
 
         //function that takes a EmailListdata Object, a Json file name, and a path and saves it as a Json file
-        public void SaveJsonFile(EmailListData Email, string JsonFileName, string Path)
+        public void SaveJsonFile(Object Email, string JsonFileName, string Path)
         {
 
             string jsonfile = JsonConvert.SerializeObject(Email, Formatting.Indented);
@@ -132,7 +132,7 @@ namespace mailClient
             {
                 File.Delete(FilePath);
             }
-
+            
             using (var tw = new StreamWriter(FilePath, true))
             {
                 tw.WriteLine(jsonfile.ToString());
@@ -149,13 +149,20 @@ namespace mailClient
             {
                 File.Delete(FilePath);
             }
-
-
-
-
-
-
-
         }
+
+
+        //function that moves a  file from one folder to another
+        public void MoveFile(string FileName, string Path, string NewPath)
+        {
+            string FilePath = System.IO.Path.Combine(Path, FileName);
+            string NewFilePath = System.IO.Path.Combine(NewPath, FileName);
+
+            if (File.Exists(FilePath))
+            {
+                File.Move(FilePath, NewFilePath);
+            }
+        }
+
     }
 }

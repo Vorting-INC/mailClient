@@ -247,6 +247,7 @@
             this.Controls.Add(this.SubjectLabel);
             this.Controls.Add(this.ToLabel);
             this.Name = "SendingEmail";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Email editor";
             this.Load += new System.EventHandler(this.Sending_an_Load);
             this.ResumeLayout(false);

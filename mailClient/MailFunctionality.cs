@@ -204,18 +204,18 @@ namespace mailClient
         }
 
         //Functions that Downloads New Emails
-        public void DownloadNewEmails(string Email, string Password, string Server)
+        public async void DownloadNewEmails(string Email, string Password, string Server)
         {
             using (var client = new ImapClient())
             {
-                client.Connect(Server, 993, true);
-                client.Authenticate(Email, Password);
+             await   client.ConnectAsync(Server, 993, true);
+             await   client.AuthenticateAsync(Email, Password);
 
-                client.Inbox.Open(FolderAccess.ReadWrite);
+              await  client.Inbox.OpenAsync(FolderAccess.ReadWrite);
 
                 var inbox = client.Inbox;
 
-                var items = inbox.Fetch(0, -1, MessageSummaryItems.Full | MessageSummaryItems.UniqueId | MessageSummaryItems.BodyStructure);
+                var items = await inbox.FetchAsync(0, -1, MessageSummaryItems.Full | MessageSummaryItems.UniqueId | MessageSummaryItems.BodyStructure);
 
                 foreach (var item in items)
                 {
@@ -223,7 +223,7 @@ namespace mailClient
                     {
                         
                         //Set the flag to seen
-                        inbox.AddFlags(item.UniqueId, MessageFlags.Seen, true);
+                       await inbox.AddFlagsAsync(item.UniqueId, MessageFlags.Seen, true);
 
                         //create a new emailListdata clas to store the data in Json format
                         var email = new EmailListData();
@@ -255,7 +255,7 @@ namespace mailClient
                         var bodyPart = item.TextBody;
 
                         // download the 'text/plain' body part
-                        var body = (TextPart)client.Inbox.GetBodyPart(item.UniqueId, bodyPart);
+                        var body =  (TextPart)client.Inbox.GetBodyPart(item.UniqueId, bodyPart);
 
                         // TextPart.Text is a convenience property that decodes the content and converts the result to
                         // a string for us
@@ -269,7 +269,7 @@ namespace mailClient
                         {
                             
                             // download the attachment just like we did with the body
-                            var entity = client.Inbox.GetBodyPart(item.UniqueId, attachment);
+                            var  entity = await client.Inbox.GetBodyPartAsync(item.UniqueId, attachment);
 
                             // attachments can be either message/rfc822 parts or regular MIME parts
                             if (entity is MessagePart)
@@ -349,8 +349,8 @@ namespace mailClient
                             email.Body = email.Body.Replace("%%SNAPMAIL%%", "");
 
                             //delete the email from the server so it wont be downloaded again
-                            client.Inbox.AddFlags(item.UniqueId, MessageFlags.Deleted, true);
-                            client.Inbox.Expunge();
+                           await client.Inbox.AddFlagsAsync(item.UniqueId, MessageFlags.Deleted, true);
+                           await client.Inbox.ExpungeAsync();
 
 
                         }
@@ -401,18 +401,18 @@ namespace mailClient
         }
 
         //Function that downloads all Email from the server and put them into their respective folders
-        public void DownloadAllEmails(string Email, string Password, string Server)
+        public async void DownloadAllEmails(string Email, string Password, string Server)
         {
             using (var client = new ImapClient())
             {
                 if (!client.IsConnected)
                 {
                     Console.WriteLine("Connecting to server...");
-                    client.Connect(Server, 993, true);
-                    client.Authenticate(Email, Password);
+                   await  client.ConnectAsync(Server, 993, true);
+                   await client.AuthenticateAsync(Email, Password);
                 }
 
-                var folders = client.GetFolders(new FolderNamespace('.', ""));
+                var folders = await client.GetFoldersAsync(new FolderNamespace('.', ""));
                 //Goes through the folders
                 foreach (var folder in folders)
                 {
@@ -517,7 +517,7 @@ namespace mailClient
                             }
                         }
 
-                        //remove unwanted charrects from the subject
+                        //remove unwanted charracters from the subject
                         string subject = email.Subject;
                         subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
                         string FileName = subject + item.UniqueId + ".json";
@@ -565,8 +565,8 @@ namespace mailClient
         {
             using (var client = new ImapClient())
             {
-                client.Connect(Server, 993, true);
-                client.Authenticate(Email, Password);
+             await   client.ConnectAsync(Server, 993, true);
+             await   client.AuthenticateAsync(Email, Password);
 
                 var Folders = await client.GetFoldersAsync(new FolderNamespace('.',""));
 

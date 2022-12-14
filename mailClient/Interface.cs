@@ -127,7 +127,7 @@ namespace mailClient
 
 
 
-        private void Recieve_Click(object sender, EventArgs e)
+        private   void Recieve_Click(object sender, EventArgs e)
         {
             //mailFunctionality.DownloadBodyParts(Email, Password, Server);
             mailFunctionality.DownloadNewEmails(Email, Password, Server);
@@ -409,6 +409,11 @@ namespace mailClient
 
             // Perform the sort with these new sort options.
             myListView.Sort();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
 
         //what is lvwColumnSorter?

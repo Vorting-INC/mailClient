@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>mailClient</RootNamespace>
     <AssemblyName>mailClient</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -133,6 +134,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThreadClass.cs" />
     <EmbeddedResource Include="CreateStorage.resx">
       <DependentUpon>CreateStorage.cs</DependentUpon>
     </EmbeddedResource>

@@ -49,9 +49,10 @@
             // 
             // RetrieveNewEmail
             // 
-            this.RetrieveNewEmail.Location = new System.Drawing.Point(25, 575);
+            this.RetrieveNewEmail.Location = new System.Drawing.Point(38, 885);
+            this.RetrieveNewEmail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RetrieveNewEmail.Name = "RetrieveNewEmail";
-            this.RetrieveNewEmail.Size = new System.Drawing.Size(113, 26);
+            this.RetrieveNewEmail.Size = new System.Drawing.Size(170, 40);
             this.RetrieveNewEmail.TabIndex = 0;
             this.RetrieveNewEmail.Text = "Retrieve new emails";
             this.RetrieveNewEmail.UseVisualStyleBackColor = true;
@@ -61,18 +62,20 @@
             // 
             this.RetrievedFolders.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RetrievedFolders.FormattingEnabled = true;
-            this.RetrievedFolders.ItemHeight = 25;
-            this.RetrievedFolders.Location = new System.Drawing.Point(12, 162);
+            this.RetrievedFolders.ItemHeight = 36;
+            this.RetrievedFolders.Location = new System.Drawing.Point(18, 249);
+            this.RetrievedFolders.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RetrievedFolders.Name = "RetrievedFolders";
-            this.RetrievedFolders.Size = new System.Drawing.Size(125, 304);
+            this.RetrievedFolders.Size = new System.Drawing.Size(186, 436);
             this.RetrievedFolders.TabIndex = 2;
             this.RetrievedFolders.SelectedIndexChanged += new System.EventHandler(this.RetrievedFolders_SelectedIndexChanged);
             // 
             // RetrieveAllEmail
             // 
-            this.RetrieveAllEmail.Location = new System.Drawing.Point(25, 543);
+            this.RetrieveAllEmail.Location = new System.Drawing.Point(38, 835);
+            this.RetrieveAllEmail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RetrieveAllEmail.Name = "RetrieveAllEmail";
-            this.RetrieveAllEmail.Size = new System.Drawing.Size(113, 26);
+            this.RetrieveAllEmail.Size = new System.Drawing.Size(170, 40);
             this.RetrieveAllEmail.TabIndex = 3;
             this.RetrieveAllEmail.Text = "Retrieve All Email";
             this.RetrieveAllEmail.UseVisualStyleBackColor = true;
@@ -80,9 +83,10 @@
             // 
             // RetriveFolders
             // 
-            this.RetriveFolders.Location = new System.Drawing.Point(24, 511);
+            this.RetriveFolders.Location = new System.Drawing.Point(36, 786);
+            this.RetriveFolders.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RetriveFolders.Name = "RetriveFolders";
-            this.RetriveFolders.Size = new System.Drawing.Size(114, 26);
+            this.RetriveFolders.Size = new System.Drawing.Size(171, 40);
             this.RetriveFolders.TabIndex = 4;
             this.RetriveFolders.Text = "Retrieve Folders";
             this.RetriveFolders.UseVisualStyleBackColor = true;
@@ -90,9 +94,10 @@
             // 
             // CreateStorageButton
             // 
-            this.CreateStorageButton.Location = new System.Drawing.Point(24, 479);
+            this.CreateStorageButton.Location = new System.Drawing.Point(36, 737);
+            this.CreateStorageButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CreateStorageButton.Name = "CreateStorageButton";
-            this.CreateStorageButton.Size = new System.Drawing.Size(113, 26);
+            this.CreateStorageButton.Size = new System.Drawing.Size(170, 40);
             this.CreateStorageButton.TabIndex = 5;
             this.CreateStorageButton.Text = "Create storage";
             this.CreateStorageButton.UseVisualStyleBackColor = true;
@@ -101,9 +106,10 @@
             // SendAnEmail
             // 
             this.SendAnEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SendAnEmail.Location = new System.Drawing.Point(25, 622);
+            this.SendAnEmail.Location = new System.Drawing.Point(38, 957);
+            this.SendAnEmail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SendAnEmail.Name = "SendAnEmail";
-            this.SendAnEmail.Size = new System.Drawing.Size(113, 44);
+            this.SendAnEmail.Size = new System.Drawing.Size(170, 68);
             this.SendAnEmail.TabIndex = 6;
             this.SendAnEmail.Text = "Send an email";
             this.SendAnEmail.UseVisualStyleBackColor = true;
@@ -118,9 +124,10 @@
             this.Date,
             this.Flag});
             this.EmailListView.HideSelection = false;
-            this.EmailListView.Location = new System.Drawing.Point(154, 12);
+            this.EmailListView.Location = new System.Drawing.Point(231, 18);
+            this.EmailListView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.EmailListView.Name = "EmailListView";
-            this.EmailListView.Size = new System.Drawing.Size(676, 654);
+            this.EmailListView.Size = new System.Drawing.Size(1012, 1004);
             this.EmailListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.EmailListView.TabIndex = 7;
             this.EmailListView.UseCompatibleStateImageBehavior = false;
@@ -153,18 +160,21 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(18, 18);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(125, 132);
+            this.pictureBox1.Size = new System.Drawing.Size(188, 203);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // RefreshButton
             // 
-            this.RefreshButton.Location = new System.Drawing.Point(39, 681);
+            this.RefreshButton.Location = new System.Drawing.Point(58, 1048);
+            this.RefreshButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(75, 23);
+            this.RefreshButton.Size = new System.Drawing.Size(112, 35);
             this.RefreshButton.TabIndex = 9;
             this.RefreshButton.Text = "Refresh";
             this.RefreshButton.UseVisualStyleBackColor = true;
@@ -172,9 +182,10 @@
             // 
             // SeenButton
             // 
-            this.SeenButton.Location = new System.Drawing.Point(154, 681);
+            this.SeenButton.Location = new System.Drawing.Point(231, 1048);
+            this.SeenButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SeenButton.Name = "SeenButton";
-            this.SeenButton.Size = new System.Drawing.Size(75, 23);
+            this.SeenButton.Size = new System.Drawing.Size(112, 35);
             this.SeenButton.TabIndex = 10;
             this.SeenButton.Text = "Seen/Unseen";
             this.SeenButton.UseVisualStyleBackColor = true;
@@ -182,9 +193,10 @@
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(235, 681);
+            this.DeleteButton.Location = new System.Drawing.Point(352, 1048);
+            this.DeleteButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(75, 23);
+            this.DeleteButton.Size = new System.Drawing.Size(112, 35);
             this.DeleteButton.TabIndex = 11;
             this.DeleteButton.Text = "Delete";
             this.DeleteButton.UseVisualStyleBackColor = true;
@@ -192,9 +204,9 @@
             // 
             // Interface
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 732);
+            this.ClientSize = new System.Drawing.Size(1263, 1050);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.SeenButton);
             this.Controls.Add(this.RefreshButton);
@@ -207,6 +219,7 @@
             this.Controls.Add(this.RetrievedFolders);
             this.Controls.Add(this.RetrieveNewEmail);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Interface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SigmaMail";

@@ -42,12 +42,22 @@ namespace mailClient
             //if its a reply
             if (type == "reply")
             {
+                
                 //set the to box to the email from
                 EmailTextBox.Text = email.From;
-                //set the subject box to the email subject
-                SubjectTextBox.Text = email.Subject;
-                //set the body box to the email body
-                BodyRichTextBox.Text = email.Body;
+                //add Re: to the fromt of the subject and add it to the subject box
+                if (email.Subject.Contains("Re:"))
+                {
+                    SubjectTextBox.Text = email.Subject;
+                }
+                else
+                {
+                    SubjectTextBox.Text = "Re: " + email.Subject;
+                }
+                
+                
+                //add some lines before the body and set the body box to the email body
+                BodyRichTextBox.Text ="\r \r " + "* Wrote "+ email.Date + "\n" + "> " + email.Body;
             }
             //if its a forward
             if (type == "forward")
@@ -79,7 +89,7 @@ namespace mailClient
             //clear the contact list
             contactList.Clear();
             //get the contact list from the storage
-            contactList = storage.LoadJsonFilesContacts(@"C:\\Users\\askvo\\Desktop\\EmailTestStorage\\Contacts");
+            contactList = storage.LoadJsonFilesContacts(Properties.Settings.Default.FolderPathContactList);
         }
 
         //insert the contacts into the contact Combo box

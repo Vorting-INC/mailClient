@@ -42,7 +42,7 @@ namespace mailClient
         }
 
         //Sending Using MimeKit and SMTP
-        public void SendEmailTest(EmailListData email, string Email, string Password , string Server)
+        public async void SendEmailTest(EmailListData email, string Email, string Password , string Server)
         {
             
             var message = new MimeMessage();
@@ -101,107 +101,31 @@ namespace mailClient
                 };
                 
             }
-            
-
-            using (var client = new SmtpClient())
+            try
             {
-                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                client.Connect(Server, 587, false);
-
-                // Note: only needed if the SMTP server requires authentication
-                client.Authenticate(Email, Password);
-
-                client.Send(message);
-                client.Disconnect(true);
-            }
-        }
-
-        //send an email taking the class EmailListData as a parameter
-        public async void SendEmail(EmailListData email, string Email, string Password, string Server)
-        {
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("",Email));
-
-            //send email with name 
-            if (email.To.Contains("<"))
-            {
-                //gets the name from the email
-                string name = email.To.Substring(0, email.To.IndexOf("<"));
-                //gets the email from the email
-                string emailTo = email.To.Substring(email.To.IndexOf("<") + 1, email.To.IndexOf(">") - email.To.IndexOf("<") - 1);
-                message.To.Add(new MailboxAddress(name, emailTo));
-            }
-            if (email.ToName != "")
-            {
-                message.To.Add(new MailboxAddress(email.ToName, email.To));
-            }
-            else
-            {
-                message.To.Add(new MailboxAddress("", email.To));
-            }
-           
-
-            message.To.Add(MailboxAddress.Parse(email.To));
-            
-            Console.WriteLine(email.To);
-            message.Subject = email.Subject;
-            if (email.Cc != "")
-            {
-                message.Cc.Add(new MailboxAddress("", email.Cc));
-            }
-           
-            
-           
-
-            BodyBuilder builder = new BodyBuilder();
-            
-                
-            builder.TextBody = email.Body;
-            if (email.Attachment != "")
-            {
-                builder.Attachments.Add(email.Attachment);
-            }
-            
-            message.Body = builder.ToMessageBody();
-            
-
-            //Send the mail via SMTP
-            SmtpClient client = new SmtpClient();
-            
-                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                
-
-                string SMTPserver = Server;
-                //removes imap prefix from Server and set it to SMTP
-                SMTPserver = SMTPserver.Replace("imap", "smtp");
-                Console.WriteLine(SMTPserver);
-
-
-
-                //await client.ConnectAsync(SMTPserver, 465, true);
-                client.Connect(SMTPserver, 587, false);
-
-                await client.AuthenticateAsync(Email, Password);
-                await client.SendAsync(message);
-                Console.WriteLine("Should have send");
-
-                if(!client.IsConnected)
+                using (var client = new SmtpClient())
                 {
-                    Console.WriteLine("Not connected");
-                    //return false;
-                }
-                client.Disconnect(true);
-                client.Dispose();
-                //check if the mail was send 
-                //return true;
-                
-            
+                    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                    //client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
+
+
+                    await client.ConnectAsync(Server, 587, false);
+
+                    // Note: only needed if the SMTP server requires authentication
+                    await client.AuthenticateAsync(Email, Password);
+
+                    await client.SendAsync(message);
+
+                    await client.DisconnectAsync(true);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("The email could not be send please try again and check the emailadress is right" + e.Message);
+            }
         }
+
 
         //Functions that Downloads New Emails
         public async void DownloadNewEmails(string Email, string Password, string Server)
@@ -242,6 +166,10 @@ namespace mailClient
                             email.Subject = "No Subject";
                         }
                         email.Date = item.Date.ToString();
+                        
+                        //if there +00.00 remove the +00:00 from the end of the date string 
+                        email.Date = email.Date.Replace("+00:00", "");
+
                         email.To = item.Envelope.To.ToString();
                         email.Cc = item.Envelope.Cc.ToString();
                         email.Bcc = item.Envelope.Bcc.ToString();
@@ -357,43 +285,6 @@ namespace mailClient
                         email.JsonFileName = FileName;
                         //save the file tp the folderPath using storageInterface
                         StorageInterface.SaveJsonFile(email , FileName, FolderPath);
-
-
-
-                        
-
-
-
-
-
-
-                        /*
-                        //create a string path to store the json data
-                        string subject = item.Envelope.Subject.ToString();
-                        string pathFolder = Properties.Settings.Default.FolderPath + "\\Inbox\\" + subject+"_"+item.UniqueId + ".json";
-
-                        //saves the Name of the file in the Json file itself
-                        
-
-                        string jsonfile = JsonConvert.SerializeObject(email);
-                        
-                        //remove this charrackte :  from the string 
-                        subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
-
-                        
-
-                        if (File.Exists(pathFolder))
-                        {
-                            File.Delete(pathFolder);
-                        }
-                        //write the json file to the pathFolder using stream
-                        Console.WriteLine("PathFolder: {0}", pathFolder);
-                        using (var tw = new StreamWriter(pathFolder, true))
-                        {
-                            tw.WriteLine(jsonfile.ToString());
-                            tw.Close();
-                        }
-                        */
                     }
                 }
                 
@@ -527,31 +418,6 @@ namespace mailClient
                         string PathFolder = Path.Combine(Properties.Settings.Default.FolderPath, folder.Name);
                         //save the file tp the folderPath using storageInterface
                         StorageInterface.SaveJsonFile(email, FileName, PathFolder);
-
-
-                        /*
-                        string jsonfile = JsonConvert.SerializeObject(email);
-                        
-                        string subject = email.Subject;
-                        //remove this charrackte :  from the string
-                        subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
-
-                        string pathFolder = Properties.Settings.Default.FolderPath + "\\" + folder.Name + "\\" + subject + "_"+ item.UniqueId + ".json";
-
-                        if (File.Exists(pathFolder))
-                        {
-                            File.Delete(pathFolder);
-                        }
-
-                        //write the json file to the pathFolder using stream
-                        using (var tw = new StreamWriter(pathFolder, true))
-                        {
-                            tw.WriteLine(jsonfile.ToString());
-                            tw.Close();
-                        }*/
-
-
-
                     }
                 }
             }

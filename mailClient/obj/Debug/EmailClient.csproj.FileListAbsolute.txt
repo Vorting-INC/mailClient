@@ -176,3 +176,4 @@ C:\Users\Firas\Desktop\Project\mailClient\mailClient\obj\Debug\EmailClient.cspro
 C:\Users\Firas\Desktop\Project\mailClient\mailClient\obj\Debug\EmailClient.csproj.CopyComplete
 C:\Users\Firas\Desktop\Project\mailClient\mailClient\obj\Debug\mailClient.exe
 C:\Users\Firas\Desktop\Project\mailClient\mailClient\obj\Debug\mailClient.pdb
+C:\Users\askvo\Documents\GitHub\mailClient\mailClient\obj\Debug\mailClient.SettingsForm.resources

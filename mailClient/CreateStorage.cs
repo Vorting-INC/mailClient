@@ -34,18 +34,6 @@ namespace mailClient
                     //call the create folder from the storage Class
                     Storage.CreateFolder(FileFolderName.Text, FileFolderLokation.Text);
 
-
-                    //This get the two path from the storage class
-                    string FileFolderPath = Storage.GetFileFolderPath();
-                    string FileFolderPathAttachments = Storage.GetFileFolderPathAttachments();
-                    
-                    //saves the path in the setting
-                    Properties.Settings.Default["FolderPath"] = FileFolderPath;
-                    Properties.Settings.Default["FolderPathAttachments"] = FileFolderPathAttachments;
-                    Properties.Settings.Default["FolderPathSnapMail"] = Storage.GetFileFolderPathSnapMail();
-                    Properties.Settings.Default["StorageCreated"] = true;
-                    Properties.Settings.Default.Save();
-
                     //download all folders and  new emails
                     MailFunctionality mailFunctionality = new MailFunctionality();
                     mailFunctionality.RetrieveFolders(Properties.Settings.Default.Email, Properties.Settings.Default.Password, Properties.Settings.Default.Server);

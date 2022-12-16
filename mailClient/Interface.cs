@@ -28,6 +28,7 @@ namespace mailClient
         
         private ListViewColumnSorter lvwColumnSorter;
 
+        EmailListData SelectedEmail = new EmailListData();
         int MailIndex;
 
         //string FileFolderPath that can remember the path of the folder we currently have open
@@ -46,7 +47,16 @@ namespace mailClient
                 //create local storage by opening create storage Form
                 CreateStorage createStorage = new CreateStorage();
                 createStorage.Show();
-                //when the create storage form is closed
+                //when the create storage form is closed run task RetriveFolders_Click
+                createStorage.FormClosed += RetriveFolders_Click;
+
+                //when folders are downloadet run task RetrieveAllEmail_Click
+                RetrieveAllEmail.Click += RetrieveAllEmail_Click;
+
+
+
+
+
 
 
 
@@ -58,8 +68,10 @@ namespace mailClient
                 //RetriveFolder list to box
                 RetriveFoldersToListBox();
                 //Get new emails from server
-                mailFunctionality.DownloadNewEmails(Email, Password, Server);
+                
             }
+            
+           
 
            
             //For sorting
@@ -67,28 +79,68 @@ namespace mailClient
             this.EmailListView.ListViewItemSorter = lvwColumnSorter;
 
             //load listview with content of inbox  folder from local storage when opening the form
-            string path = Path.Combine(Properties.Settings.Default.FolderPath, "Inbox");
+            string pathFolder = Path.Combine(Properties.Settings.Default.FolderPath,"Inbox");
 
-            EmailList = storageInterface.LoadJsonFiles(path);
-
-
-            LoadEmailListView();
+            
 
             //Save the path of the folder we currently have open
-            FileFolderPath = path;
+            string FileFolderPath = "";
+            FileFolderPath = pathFolder;
+
+            
+            
+
+
+
+            
+
+
+            //create a new backgroundWorker object
+            BackgroundWorker worker = new BackgroundWorker();
+
+            worker.DoWork += new DoWorkEventHandler(DoWork);
+
+            worker.RunWorkerAsync();
 
             //call listview_Columnclick to sort the listview by the third column
-
-
             EmailListView_ColumnClick(EmailListView, new ColumnClickEventArgs(2));
             //call it a second time to get ascending order, its a stupid way but i aint changing the other thing
             EmailListView_ColumnClick(EmailListView, new ColumnClickEventArgs(2));
 
+            //get the index of inbox in RetrievedFolders listbox
+            int index = RetrievedFolders.FindString("Inbox");
+            //trigger a click on the inbox folder in the RetrievedFolders listbox
+            RetrievedFolders.SetSelected(index, true);
 
 
 
 
 
+
+        }
+
+
+
+        //DoWork event handler
+        void DoWork(object sender, DoWorkEventArgs e)
+        {
+            //retrieve new emails every 30 seconds
+            while (true)
+            {
+                System.Threading.Thread.Sleep(30000);
+                mailFunctionality.DownloadNewEmails(Email, Password, Server);
+                //trigger the load of the listview in the main thread
+                try
+                {
+                    //invoke the reload of Email list view
+                    this.Invoke(new MethodInvoker(delegate { LoadEmailListView(); }));
+                }
+                catch
+                {
+                    //do noting
+                }
+
+            }
         }
 
 
@@ -106,11 +158,11 @@ namespace mailClient
             foreach (string folder in folders)
             {
                 //do not add attachments and Contacts folder to the listbox
-                if (folder != Properties.Settings.Default.FolderPath + "\\Attachments" && folder != Properties.Settings.Default.FolderPath + "\\Contacts")
+                if (folder != Properties.Settings.Default.FolderPath + "\\Attachments" && folder != Properties.Settings.Default.FolderPath + "\\ContactsList")
                 {
-                    //add the folder name to the listbox
                     RetrievedFolders.Items.Add(Path.GetFileName(folder));
                 }
+                
 
 
             }
@@ -129,8 +181,10 @@ namespace mailClient
 
         private   void Recieve_Click(object sender, EventArgs e)
         {
-            //mailFunctionality.DownloadBodyParts(Email, Password, Server);
-            mailFunctionality.DownloadNewEmails(Email, Password, Server);
+            //download the new mails in the background running the function in a new thread
+            Task.Run(() => mailFunctionality.DownloadNewEmails(Email, Password, Server));
+            //load the listview with the new emails
+            LoadEmailListView();
         }
 
 
@@ -177,6 +231,18 @@ namespace mailClient
                     lvi.Font = new Font(lvi.Font, FontStyle.Regular);
                 }
 
+                
+
+                //if the email is flag as important load the icon form imageList1 in column 3
+                if (item.Flag == true)
+                {
+                    lvi.ImageIndex = 0;
+                }
+                else if (item.Flag == false)
+                {
+                    lvi.ImageIndex = -1;
+                }
+                
                 EmailListView.Items.Add(lvi);
 
 
@@ -187,9 +253,14 @@ namespace mailClient
 
         //function that loads the EmailListView
         private void LoadEmailListView()
-        {
+        {   
             //clear the EmailListView
             EmailListView.Items.Clear();
+            //reload EmailList from storage
+            EmailList = storageInterface.LoadJsonFiles(FileFolderPath);
+
+
+
 
             foreach (var item in EmailList)
             {
@@ -209,23 +280,35 @@ namespace mailClient
                     //make the text normal if the email is read
                     lvi.Font = new Font(lvi.Font, FontStyle.Regular);
                 }
+                
 
                 EmailListView.Items.Add(lvi);
+
+                //if the email is flag as important load the icon form imageList1 in column 3
+                if (item.Flag == true)
+                {
+                    lvi.ImageIndex = 0;
+                }
+                else if (item.Flag == false)
+                {
+                    lvi.ImageIndex = -1;
+                }
+                
+
             }
         }
 
         private void RetrieveAllEmail_Click(object sender, EventArgs e)
         {
-            //call function to retrieve all emails
-            mailFunctionality.DownloadAllEmails(Email, Password, Server);
+            //download all mails in the background running the function in a new thread
+            Task.Run(() => mailFunctionality.DownloadAllEmails(Email, Password, Server));
         }
 
         private void RetriveFolders_Click(object sender, EventArgs e)
         {
 
-            mailFunctionality.RetrieveFolders(Email, Password, Server);
-
-
+            Task.Run(() => mailFunctionality.RetrieveFolders(Email, Password, Server));
+            
         }
 
         private void CreateStorageButton_Click(object sender, EventArgs e)
@@ -253,52 +336,60 @@ namespace mailClient
         private void EmailListView_MouseClick(object sender, MouseEventArgs e)
         {
             //get the selected item in the listview
-            MailIndex = EmailListView.SelectedIndices[0];
+            SelectedEmail = EmailList.Find(x => x.Subject == EmailListView.SelectedItems[0].SubItems[1].Text);
 
-            //show the Email selected in the EmailListView in the RecievedEmails textbox
+
+            //Set Mailindex to selected item
+            MailIndex = EmailListView.SelectedItems[0].Index;
+
 
         }
 
 
         //function that update the EmailIsSeen property in the EmailListData object by taking the index of the selected item in the EmailListView and if it is seen or not
-        public void UpdateEmailIsSeen(int index, bool EmailIsSeen)
+        public void UpdateEmailIsSeen(EmailListData Email, bool TruthValue)
         {
-            EmailList[index].EmailIsSeen = EmailIsSeen;
+            Email.EmailIsSeen = TruthValue;
+            
 
-
-            storageInterface.SaveJsonFile(EmailList[index], EmailList[index].JsonFileName, FileFolderPath);
+            storageInterface.SaveJsonFile(Email, Email.JsonFileName, FileFolderPath);
         }
 
         private void EmailListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //Opens a window to show the email selected in the form EmailShow
-            var index = EmailListView.SelectedIndices[0];
+            //get the selected item in the listview
+            int index = EmailListView.SelectedIndices[0];
+
+
+
+            //Get the object from the EmailList that has the same name as the selected item in the EmailListView
+            SelectedEmail = EmailList.Find(x => x.Subject == EmailListView.SelectedItems[0].SubItems[1].Text);
 
             //constructs the form emailShow
-            EmailShow emailShow = new EmailShow(EmailList[index]);
+            EmailShow emailShow = new EmailShow(SelectedEmail);
 
 
 
 
 
             //if its a snapmail is should deleted when opened
-            if (EmailList[index].Snap == true)
+            if (SelectedEmail.Snap == true)
             {
                 //delete the email
-                storageInterface.DeleteJsonFile(EmailList[index].JsonFileName, FileFolderPath);
+                storageInterface.DeleteJsonFile(SelectedEmail.JsonFileName, FileFolderPath);
                 //remove the email from the EmailList
                 EmailList.RemoveAt(index);
                 //reload the EmailListView
                 LoadEmailListView();
             }
             //if email is not seen
-            else if (EmailList[index].EmailIsSeen == false)
+            else if (SelectedEmail.EmailIsSeen == false)
             {
-                UpdateEmailIsSeen(index, true);
+                UpdateEmailIsSeen(SelectedEmail, true);
             }
 
 
-
+            
             emailShow.Show();
 
             //reload listview
@@ -326,7 +417,6 @@ namespace mailClient
             //reload the list box
             RetrievedFolders.Items.Clear();
             RetriveFoldersToListBox();
-
             //and reload the emails in the listview
             EmailListView.Items.Clear();
 
@@ -336,14 +426,16 @@ namespace mailClient
         {
             //change the email to seen or unseen depending on its current state
 
-            if (EmailList[MailIndex].EmailIsSeen == true)
+            if (SelectedEmail.EmailIsSeen == true)
             {
-                UpdateEmailIsSeen(MailIndex, false);
+                UpdateEmailIsSeen(SelectedEmail, false);
+                
             }
-            else
+            else if (SelectedEmail.EmailIsSeen == false)
             {
-                UpdateEmailIsSeen(MailIndex, true);
+                UpdateEmailIsSeen(SelectedEmail, true);
             }
+           
             //then update email listview
             LoadEmailListView();
 
@@ -358,7 +450,7 @@ namespace mailClient
                 if (dialogResult == DialogResult.Yes)
                 {
                     //delete the email
-                    storageInterface.DeleteJsonFile(EmailList[MailIndex].JsonFileName, FileFolderPath);
+                    storageInterface.DeleteJsonFile(SelectedEmail.JsonFileName, FileFolderPath);
                     //remove the email from the EmailList
                     EmailList.RemoveAt(MailIndex);
                     //reload the EmailListView
@@ -413,6 +505,42 @@ namespace mailClient
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void FlagButton_Click(object sender, EventArgs e)
+        {
+            //make the currenly selected email flagged or unflagged depending on its current state
+            if (SelectedEmail.Flag == true)
+            {
+                SelectedEmail.Flag = false;
+            }
+            else if (SelectedEmail.Flag == false)
+            {
+                SelectedEmail.Flag = true;
+            }
+
+            //save the email
+            storageInterface.SaveJsonFile(SelectedEmail, SelectedEmail.JsonFileName, FileFolderPath);
+            //reload the listview
+            LoadEmailListView();
+        }
+
+        private void MoveEmailButton_Click(object sender, EventArgs e)
+        {
+            //move the selected email to arkiv
+            storageInterface.MoveFile(SelectedEmail.JsonFileName, FileFolderPath, Properties.Settings.Default.FolderPath + "\\" + "Arkiv");
+            //reload listview
+            EmailList.RemoveAt(MailIndex);
+            LoadEmailListView();
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            //open the settings form
+            SettingsForm settings = new SettingsForm();
+            settings.Show();
+            
 
         }
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace mailClient
 {
@@ -116,6 +117,7 @@ namespace mailClient
             if (NewEmail.FromName != "" && NewEmail.FromName != null)
             {
                 contact.Name = NewEmail.FromName;
+                contact.Name = contact.Name.Replace("\"", "");
             }
             
             //
@@ -125,6 +127,8 @@ namespace mailClient
                 contact.Email = NewEmail.From.Substring(NewEmail.From.IndexOf("<") + 1, NewEmail.From.IndexOf(">") - NewEmail.From.IndexOf("<") - 1);
                 //adds the name
                 contact.Name = NewEmail.From.Substring(0, NewEmail.From.IndexOf("<") - 1);
+                //remove "" from the name
+                contact.Name = contact.Name.Replace("\"", "");
             }
             else
             {
@@ -133,9 +137,9 @@ namespace mailClient
             //create a string with the email but remove the dot
             string EmailFileName = contact.Email;
             EmailFileName = Regex.Replace(EmailFileName, "[^a-zA-Z0-9]", String.Empty);
-            
+
             //Save the contact to local storage in JSON format
-            storage.SaveJsonFile(contact, EmailFileName + ".json", @"C:\\Users\\askvo\\Desktop\\EmailTestStorage\\Contacts");
+            storage.SaveJsonFile(contact, EmailFileName + ".json", Properties.Settings.Default.FolderPathContactList);
 
 
             //

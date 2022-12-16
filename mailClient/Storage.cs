@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
+using System.Net.Mail;
+
 
 namespace mailClient
 {
@@ -30,14 +32,28 @@ namespace mailClient
             string pathSnapMail = System.IO.Path.Combine(path, "Snapmail");
             System.IO.Directory.CreateDirectory(pathSnapMail);
 
+            //creates a folder for snapmail
+            string pathContactList = System.IO.Path.Combine(path, "ContactList");
+            System.IO.Directory.CreateDirectory(pathContactList);
+
+            //create a folder for setting file
+            string pathSettings = System.IO.Path.Combine(path, "Settings");
+            System.IO.Directory.CreateDirectory(pathSettings);
 
 
+
+
+
+            //save the path to propeties settings
+            Properties.Settings.Default["FolderPath"] = path;
+            Properties.Settings.Default["FolderPathAttachments"] = pathAttachments;
+            Properties.Settings.Default["FolderPathSnapMail"] = pathSnapMail;
+            Properties.Settings.Default["FolderPathContactList"] = pathContactList;
+            Properties.Settings.Default["FolderPathSettings"] = pathSettings;
+            Properties.Settings.Default["StorageCreated"] = true;
+            Properties.Settings.Default.Save();
+            
             MessageBox.Show("Successfully created a folder");
-
-            FileFolderPath = path;
-            FileFOlderPathAttachments = pathAttachments;
-            FileFolderPathSnapMail = pathSnapMail;
-
         }
 
 
@@ -119,6 +135,13 @@ namespace mailClient
             return ContactList;
         }
 
+        //function that loads a json file from a folder and returns the file as object FilterWordFormat 
+       
+
+
+
+        
+
 
 
         //function that takes a EmailListdata Object, a Json file name, and a path and saves it as a Json file
@@ -163,6 +186,22 @@ namespace mailClient
                 File.Move(FilePath, NewFilePath);
             }
         }
+
+        //function that moves a  file from one folder to another folder
+
+        public void MoveFile(string FileName, string Path, string NewPath, string NewFileName)
+        {
+            string FilePath = System.IO.Path.Combine(Path, FileName);
+            string NewFilePath = System.IO.Path.Combine(NewPath, NewFileName);
+
+            if (File.Exists(FilePath))
+            {
+                File.Move(FilePath, NewFilePath);
+            }
+        }
+
+
+
 
     }
 }

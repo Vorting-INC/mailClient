@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmailShow));
             this.FromBox = new System.Windows.Forms.TextBox();
             this.SubjectBox = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -93,7 +94,7 @@
             // 
             this.DateBox.Location = new System.Drawing.Point(532, 68);
             this.DateBox.Name = "DateBox";
-            this.DateBox.Size = new System.Drawing.Size(143, 20);
+            this.DateBox.Size = new System.Drawing.Size(158, 20);
             this.DateBox.TabIndex = 5;
             // 
             // AttachmentBox
@@ -202,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 776);
+            this.ClientSize = new System.Drawing.Size(884, 791);
             this.Controls.Add(this.SaveContactButton);
             this.Controls.Add(this.ForwardButton);
             this.Controls.Add(this.ReplyButton);
@@ -220,7 +221,9 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.SubjectBox);
             this.Controls.Add(this.FromBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EmailShow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EmailShow";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

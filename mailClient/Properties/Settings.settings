@@ -29,5 +29,11 @@
     <Setting Name="SpamWords" Type="System.String" Scope="User">
       <Value Profile="(Default)">Sales tilbud</Value>
     </Setting>
+    <Setting Name="FolderPathContactList" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FolderPathSetting" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

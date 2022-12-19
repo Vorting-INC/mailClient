@@ -22,21 +22,31 @@ namespace mailClient
         
         public static string CensorFlaggedWords(string input, string[] flaggedWords)
         {
-            MessageBox.Show("Running Cencor word");
+            //print the flaggedWords to Console
+            foreach (string word in flaggedWords)
+            {
+                Console.WriteLine(word);
+            }
+
+
             // Split the input string into words and iterate over each word
             foreach (string word in input.Split(' '))
             {
-                
+                Console.WriteLine("Censoring " + word);
+
                 // Check if the current word is a flagged word, where capital letters or smaller letters does not matter
-                if (flaggedWords.Contains(word))
+                if (flaggedWords.Contains(word.ToLower()))
                 {
+                    // Replace the flagged word with asterisks
                     string replacement = word.Substring(0, 1);
+                    
                     for (int i = 1; i < word.Length; i++)
                     {
                         replacement += "*";
                     }
                     // If the word is a flagged word, replace it with censored version
                     input = input.Replace(word, replacement);
+                    Console.WriteLine("Word replaced with" + replacement);
                 }
             }
 
@@ -46,13 +56,15 @@ namespace mailClient
 
         public static bool SpamFilter(string input, string[] SpamWords)
         {
-            int Result = 0;
+            
             // Split the input string into words and iterate over each word
             foreach (string word in input.Split(' '))
             {
+                Console.WriteLine(word);
                 // Check if the current word is a flagged word, where capital letters or smaller letters does not matter
-                if (word != null && SpamWords.Contains(word.ToLower()) && Properties.Settings.Default.SpamFilterActive == true)
+                if (SpamWords.Contains(word.ToLower()) && Properties.Settings.Default.SpamFilterActive == true)
                 {
+                    Console.WriteLine("Spam detected");
                     return true;
                 }
                 

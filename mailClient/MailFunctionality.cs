@@ -205,14 +205,9 @@ namespace mailClient
 
                         email.Body = text;
 
-                        //check if words in the subject are in the blacklist and should be censured
-                        if (Properties.Settings.Default.BadWordFilterActive)
-                        {
-                            //run the subject trough the badword filter
-                            
-
-                        }
-                        email.Body = Filters.CensorFlaggedWords(email.Body, BadWords.Words);
+                       
+                        
+                        
 
                         // now iterate over all of the attachments and save them to disk
                         foreach (var attachment in item.Attachments)
@@ -246,12 +241,20 @@ namespace mailClient
                                 email.Attachment = path;
                             }
                         }
-
+                        
                         //remove unwanted charrects from the subject
                         string subject = email.Subject;
                         subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
                         string FileName = subject + item.UniqueId + ".json";
+                        
+                         //check if words in the subject are in the blacklist and should be censured
+                        if (Properties.Settings.Default.BadWordFilterActive)
+                        {
+                            //run the subject trough the badword filter
+                            email.Body = Filters.CensorFlaggedWords(email.Body, BadWords.Words);
+                            email.Subject = Filters.CensorFlaggedWords(email.Subject, BadWords.Words);
 
+                        }
                         
 
                         
@@ -279,12 +282,7 @@ namespace mailClient
                                 if (!Directory.Exists(FolderPath))
                                 {
                                     Directory.CreateDirectory(FolderPath);
-                                }
-
-                                
-                                
-
-
+                                }                            
                             }
                         }
                         
@@ -441,17 +439,86 @@ namespace mailClient
                             }
                         }
 
-                        //remove unwanted charracters from the subject
+                        
+
+
+
+                        //remove unwanted charrects from the subject
                         string subject = email.Subject;
                         subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
                         string FileName = subject + item.UniqueId + ".json";
 
+                        //check if words in the subject are in the blacklist and should be censured
+                        if (Properties.Settings.Default.BadWordFilterActive)
+                        {
+                            //run the subject trough the badword filter
+                            email.Body = Filters.CensorFlaggedWords(email.Body, BadWords.Words);
+                            email.Subject = Filters.CensorFlaggedWords(email.Subject, BadWords.Words);
+
+                        }
+
+
+
+
+
+                        //Now its time to deside where to save the file
+                        string FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, folder.Name);
+
+                        //check if there is a inbox folder else create it
+                        if (!Directory.Exists(FolderPath))
+                        {
+                            Directory.CreateDirectory(FolderPath);
+                        }
+
+
+
+                        //if Properties spamfilterActive is true 
+                        if (Properties.Settings.Default.SpamFilterActive == true)
+                        {
+                            //check if the email is spam
+                            if (Filters.SpamFilter(email.Body, SpamWords.Words))
+                            {
+                                //if the email is spam save it in the spam folder
+                                FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "Junk");
+                                if (!Directory.Exists(FolderPath))
+                                {
+                                    Directory.CreateDirectory(FolderPath);
+                                }
+                            }
+                        }
+
+
+
+                        //check if the mail is a SnapMail
+                        if (email.Body.Contains("%%SNAPMAIL%%"))
+                        {
+                            FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "SnapMail");
+                            //check if the folder exists
+                            if (!Directory.Exists(FolderPath))
+                            {
+                                Directory.CreateDirectory(FolderPath);
+                            }
+                            //save the file in the spam folder
+
+
+                            //set boolean snapmail to true
+                            email.Snap = true;
+
+                            //remove the snapmail tag from the body
+                            email.Body = email.Body.Replace("%%SNAPMAIL%%", "");
+
+                            //delete the email from the server so it wont be downloaded again
+                            await client.Inbox.AddFlagsAsync(item.UniqueId, MessageFlags.Deleted, true);
+                            await client.Inbox.ExpungeAsync();
+
+
+                        }
+
                         email.JsonFileName = FileName;
-                        
-                        string PathFolder = Path.Combine(Properties.Settings.Default.FolderPath, folder.Name);
                         //save the file tp the folderPath using storageInterface
-                        StorageInterface.SaveJsonFile(email, FileName, PathFolder);
+                        StorageInterface.SaveJsonFile(email, FileName, FolderPath);
                     }
+                
                 }
             }
         }
@@ -479,6 +546,9 @@ namespace mailClient
                     Directory.CreateDirectory(fullPath);                   
                 }
             }
+
+            //Download all mails
+            DownloadAllEmails(Email, Password, Server);
         }
         //this function is done
 

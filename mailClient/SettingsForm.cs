@@ -194,6 +194,11 @@ namespace mailClient
         {
 
         }
+
+        private void BadWordsBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

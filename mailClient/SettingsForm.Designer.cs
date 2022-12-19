@@ -50,6 +50,7 @@
             this.BadWordsBox.Name = "BadWordsBox";
             this.BadWordsBox.Size = new System.Drawing.Size(149, 381);
             this.BadWordsBox.TabIndex = 0;
+            this.BadWordsBox.SelectedIndexChanged += new System.EventHandler(this.BadWordsBox_SelectedIndexChanged);
             // 
             // SpamWordsBox
             // 

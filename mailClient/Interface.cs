@@ -50,8 +50,11 @@ namespace mailClient
                 //when the create storage form is closed run task RetriveFolders_Click
                 createStorage.FormClosed += RetriveFolders_Click;
 
-                //when folders are downloadet run task RetrieveAllEmail_Click
-                RetrieveAllEmail.Click += RetrieveAllEmail_Click;
+                //when RetriveFolder
+                
+                
+
+
 
 
 
@@ -87,36 +90,40 @@ namespace mailClient
             string FileFolderPath = "";
             FileFolderPath = pathFolder;
 
-            
-            
-
-
-
-            
-
-
-            //create a new backgroundWorker object
-            BackgroundWorker worker = new BackgroundWorker();
-
-            worker.DoWork += new DoWorkEventHandler(DoWork);
-
-            worker.RunWorkerAsync();
-
-            //call listview_Columnclick to sort the listview by the third column
-            EmailListView_ColumnClick(EmailListView, new ColumnClickEventArgs(2));
-            //call it a second time to get ascending order, its a stupid way but i aint changing the other thing
-            EmailListView_ColumnClick(EmailListView, new ColumnClickEventArgs(2));
-
-            //get the index of inbox in RetrievedFolders listbox
-            int index = RetrievedFolders.FindString("Inbox");
-            //trigger a click on the inbox folder in the RetrievedFolders listbox
-            RetrievedFolders.SetSelected(index, true);
 
 
 
 
 
 
+            try
+            {
+
+
+
+                //create a new backgroundWorker object
+                BackgroundWorker worker = new BackgroundWorker();
+
+                worker.DoWork += new DoWorkEventHandler(DoWork);
+
+                worker.RunWorkerAsync();
+
+                //call listview_Columnclick to sort the listview by the third column
+                EmailListView_ColumnClick(EmailListView, new ColumnClickEventArgs(2));
+                //call it a second time to get ascending order, its a stupid way but i aint changing the other thing
+                EmailListView_ColumnClick(EmailListView, new ColumnClickEventArgs(2));
+
+                //get the index of inbox in RetrievedFolders listbox
+                int index = RetrievedFolders.FindString("Inbox");
+                //trigger a click on the inbox folder in the RetrievedFolders listbox
+                RetrievedFolders.SetSelected(index, true);
+
+            }
+
+            catch 
+            {
+               
+            }
         }
 
 
@@ -363,7 +370,7 @@ namespace mailClient
 
 
             //Get the object from the EmailList that has the same name as the selected item in the EmailListView
-            SelectedEmail = EmailList.Find(x => x.Subject == EmailListView.SelectedItems[0].SubItems[1].Text);
+            SelectedEmail = EmailList.Find(x => x.Subject == EmailListView.SelectedItems[0].SubItems[1].Text && x.Date == EmailListView.SelectedItems[0].SubItems[2].Text);
 
             //constructs the form emailShow
             EmailShow emailShow = new EmailShow(SelectedEmail);

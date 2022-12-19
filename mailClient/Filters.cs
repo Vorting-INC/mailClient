@@ -3,28 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace mailClient
 {
     internal class Filters
     {
-        //have a global variable for bad words or spamwords that can be retrieve from a settings folder
-        string[] BadWords;
-        string[] SpamWords;
+        
+        
+
+
         //SnapMail code
         string SnapMail = "%%SNAPMAIL%%";
 
 
         // Bad word we want to filter out
-        string[] flaggedWordsList = { "nigger", "fuck", "cunt", "shit", "fucking", "ass", "pussy", "dick", "tiananmen", "square", "nudes" };
         
-        static string CensorFlaggedWords(string input, string[] flaggedWords)
+        
+        public static string CensorFlaggedWords(string input, string[] flaggedWords)
         {
+            MessageBox.Show("Running Cencor word");
             // Split the input string into words and iterate over each word
             foreach (string word in input.Split(' '))
             {
+                
                 // Check if the current word is a flagged word, where capital letters or smaller letters does not matter
-                if (flaggedWords.Contains(word.ToLower()))
+                if (flaggedWords.Contains(word))
                 {
                     string replacement = word.Substring(0, 1);
                     for (int i = 1; i < word.Length; i++)
@@ -40,27 +44,23 @@ namespace mailClient
             return input;
         }
 
-        static int SpamOrSnap(string input, string[] SpamWords)
+        public static bool SpamFilter(string input, string[] SpamWords)
         {
             int Result = 0;
             // Split the input string into words and iterate over each word
             foreach (string word in input.Split(' '))
             {
                 // Check if the current word is a flagged word, where capital letters or smaller letters does not matter
-                if (SpamWords.Contains(word.ToLower()))
+                if (word != null && SpamWords.Contains(word.ToLower()) && Properties.Settings.Default.SpamFilterActive == true)
                 {
-                    Result = 1;
+                    return true;
                 }
-                //Check %%SNAPMAIL%% set value to 2
-                if ("%%SNAPMAIL%%" == word)
-                {
-                    Result = 2;
-                }
+                
             }
 
 
             // Return the censored string
-            return Result;
+            return false;
         }
 
 

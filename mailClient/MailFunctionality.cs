@@ -22,6 +22,19 @@ namespace mailClient
         //creates a instance of the storage interface
         StorageInterface StorageInterface = new StorageInterface();
 
+        //create the object Words and download them form json file
+        FilterWordFormat SpamWords = new FilterWordFormat();
+        FilterWordFormat BadWords = new FilterWordFormat();
+
+        //then load them from storage
+        public void LoadWords()
+        {
+            //load the spam words
+            SpamWords = StorageInterface.LoadJsonFileFilterWords(Path.Combine(Properties.Settings.Default.FolderPathSettings, "SpamWords.json"));
+
+            //load the bad words
+            BadWords = StorageInterface.LoadJsonFileFilterWords(Path.Combine(Properties.Settings.Default.FolderPathSettings, "BadWords.json"));
+        }
 
 
 
@@ -130,12 +143,13 @@ namespace mailClient
         //Functions that Downloads New Emails
         public async void DownloadNewEmails(string Email, string Password, string Server)
         {
+            LoadWords();
             using (var client = new ImapClient())
             {
-             await   client.ConnectAsync(Server, 993, true);
-             await   client.AuthenticateAsync(Email, Password);
+                 await   client.ConnectAsync(Server, 993, true);
+                 await   client.AuthenticateAsync(Email, Password);
 
-              await  client.Inbox.OpenAsync(FolderAccess.ReadWrite);
+                 await  client.Inbox.OpenAsync(FolderAccess.ReadWrite);
 
                 var inbox = client.Inbox;
 
@@ -191,6 +205,14 @@ namespace mailClient
 
                         email.Body = text;
 
+                        //check if words in the subject are in the blacklist and should be censured
+                        if (Properties.Settings.Default.BadWordFilterActive)
+                        {
+                            //run the subject trough the badword filter
+                            
+
+                        }
+                        email.Body = Filters.CensorFlaggedWords(email.Body, BadWords.Words);
 
                         // now iterate over all of the attachments and save them to disk
                         foreach (var attachment in item.Attachments)
@@ -230,6 +252,10 @@ namespace mailClient
                         subject = Regex.Replace(subject, "[^a-zA-Z0-9]", String.Empty);
                         string FileName = subject + item.UniqueId + ".json";
 
+                        
+
+                        
+
 
                         //Now its time to deside where to save the file
                         string FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "Inbox");
@@ -240,23 +266,29 @@ namespace mailClient
                             Directory.CreateDirectory(FolderPath);
                         }
 
-
                         
-                        string[] SpamWords = Properties.Settings.Default.SpamWords.Split(',');
-                        //check if the email is spam
 
-                        string SpamBody = email.Body.ToLower();
-                        if (SpamWords.Any(SpamBody.Contains))
+                        //if Properties spamfilterActive is true 
+                        if (Properties.Settings.Default.SpamFilterActive == true)
                         {
-                            FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "Junk");
-                            //check if the folder exists
-                            if (!Directory.Exists(FolderPath))
+                            //check if the email is spam
+                            if (Filters.SpamFilter(email.Body, SpamWords.Words))
                             {
-                                Directory.CreateDirectory(FolderPath);
+                                //if the email is spam save it in the spam folder
+                                FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "Junk");
+                                if (!Directory.Exists(FolderPath))
+                                {
+                                    Directory.CreateDirectory(FolderPath);
+                                }
+
+                                
+                                
+
+
                             }
-                            
-                            
                         }
+                        
+
 
                         //check if the mail is a SnapMail
                         if (email.Body.Contains("%%SNAPMAIL%%"))
@@ -282,6 +314,7 @@ namespace mailClient
 
 
                         }
+
                         email.JsonFileName = FileName;
                         //save the file tp the folderPath using storageInterface
                         StorageInterface.SaveJsonFile(email , FileName, FolderPath);

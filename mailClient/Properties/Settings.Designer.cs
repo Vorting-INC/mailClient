@@ -146,12 +146,36 @@ namespace mailClient.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FolderPathSetting {
+        public string FolderPathSettings {
             get {
-                return ((string)(this["FolderPathSetting"]));
+                return ((string)(this["FolderPathSettings"]));
             }
             set {
-                this["FolderPathSetting"] = value;
+                this["FolderPathSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SpamFilterActive {
+            get {
+                return ((bool)(this["SpamFilterActive"]));
+            }
+            set {
+                this["SpamFilterActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BadWordFilterActive {
+            get {
+                return ((bool)(this["BadWordFilterActive"]));
+            }
+            set {
+                this["BadWordFilterActive"] = value;
             }
         }
     }

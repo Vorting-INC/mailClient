@@ -336,7 +336,7 @@ namespace mailClient
         private void EmailListView_MouseClick(object sender, MouseEventArgs e)
         {
             //get the selected item in the listview
-            SelectedEmail = EmailList.Find(x => x.Subject == EmailListView.SelectedItems[0].SubItems[1].Text);
+            SelectedEmail = EmailList.Find(x => x.Subject == EmailListView.SelectedItems[0].SubItems[1].Text && x.Date == EmailListView.SelectedItems[0].SubItems[2].Text);
 
 
             //Set Mailindex to selected item
@@ -444,7 +444,7 @@ namespace mailClient
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             //if email is already in junk folder delete the email
-            if (RetrievedFolders.SelectedItem.ToString() == "Junk")
+            if (RetrievedFolders.SelectedItem.ToString() == "Deleted")
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to permanently delete this email?", "Delete Email", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
@@ -464,7 +464,7 @@ namespace mailClient
             else
             {
                 //Move the selected email to the junk folder
-                storageInterface.MoveFile(EmailList[MailIndex].JsonFileName, FileFolderPath, Properties.Settings.Default.FolderPath + "\\" + "Junk");
+                storageInterface.MoveFile(EmailList[MailIndex].JsonFileName, FileFolderPath, Properties.Settings.Default.FolderPath + "\\" + "Deleted");
                 //reload listview
                 EmailList.RemoveAt(MailIndex);
                 LoadEmailListView();

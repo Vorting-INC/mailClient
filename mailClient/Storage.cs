@@ -136,11 +136,27 @@ namespace mailClient
         }
 
         //function that loads a json file from a folder and returns the file as object FilterWordFormat 
-       
+        public FilterWordFormat LoadJsonFileFilterWords(string FolderPath)
+        {
+            //chech if the file exists
+            if (File.Exists(FolderPath))
+            {
+                string json = File.ReadAllText(FolderPath);
+                FilterWordFormat filterWords = JsonConvert.DeserializeObject<FilterWordFormat>(json);
+                return filterWords;
+            }
+            else
+            {
+                return null;
+            }
+            
+            
+        }
 
 
 
-        
+
+
 
 
 

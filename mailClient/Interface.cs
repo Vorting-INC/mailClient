@@ -38,7 +38,8 @@ namespace mailClient
         {
 
             InitializeComponent();
-
+            string pathFolder = Path.Combine(Properties.Settings.Default.FolderPath,"Inbox");
+            
             //if its the first time logging in
             if (Properties.Settings.Default.StorageCreated == false)
             {
@@ -47,10 +48,18 @@ namespace mailClient
                 //create local storage by opening create storage Form
                 CreateStorage createStorage = new CreateStorage();
                 createStorage.Show();
+                this.Hide();
                 //when the create storage form is closed run task RetriveFolders_Click
                 createStorage.FormClosed += RetriveFolders_Click;
 
+                //wait until there are any folders in the storage
+                //check the direktory of the local storage
+                while (Directory.Exists(Properties.Settings.Default.FolderPath + "\\Inbox") == false)
+                {
+                    //wait
+                }
                 
+                this.Show();
                 
             }
 
@@ -71,7 +80,7 @@ namespace mailClient
             this.EmailListView.ListViewItemSorter = lvwColumnSorter;
 
             //load listview with content of inbox  folder from local storage when opening the form
-            string pathFolder = Path.Combine(Properties.Settings.Default.FolderPath,"Inbox");
+           
 
             
 

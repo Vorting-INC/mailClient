@@ -58,7 +58,7 @@ namespace mailClient
         {
             
             // Split the input string into words and iterate over each word
-            foreach (string word in input.Split(' '))
+            foreach (string word in input.Split())
             {
                 Console.WriteLine(word);
                 // Check if the current word is a flagged word, where capital letters or smaller letters does not matter
@@ -100,7 +100,7 @@ namespace mailClient
         {
             string SnapMail = "%%SNAPMAIL%%";
             // Split the input string into words and iterate over each word
-            foreach (string word in email.Body.Split(' '))
+            foreach (string word in email.Body.Split())
             {
                 //create a counter to only look at the first 3 words to make it more effecient
                 int counter = 0;

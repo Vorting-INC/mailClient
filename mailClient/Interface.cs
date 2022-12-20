@@ -40,29 +40,38 @@ namespace mailClient
             InitializeComponent();
             string pathFolder = Path.Combine(Properties.Settings.Default.FolderPath,"Inbox");
             
-            //if its the first time logging in
-            if (Properties.Settings.Default.StorageCreated == false)
+          
+            
+            void initialzeFirstUse()
             {
-                bool downloaded = false;
-                //Message show that yuor are a new user
-                MessageBox.Show("Welcome to Sigmamail, you will have to create local storage before use of the mail functionality on first boot the application will restart");
-                //create local storage by opening create storage Form
-                CreateStorage createStorage = new CreateStorage();
-                createStorage.Show();
-        
+               
+                    //Message show that yuor are a new user
+                    MessageBox.Show("Welcome to Sigmamail, you will have to create local storage before use of the mail functionality on first boot the application will restart");
+                    //create local storage by opening create storage Form
+                    CreateStorage createStorage = new CreateStorage();
+                    createStorage.Show();
+
                 //when the create storage form is closed run task RetriveFolders_Click
+
                 createStorage.FormClosed += RetriveFolders_Click;
+
+
 
 
 
                 //wait until there are any folders in the storage
                 //check the direktory of the local storage
-               
+
+
 
 
             }
+            //if its the first time logging in
+            if (Properties.Settings.Default.StorageCreated == false)
+            {
+                initialzeFirstUse();
             
-
+            }
             //retrive folders if local storage exist
             if (Properties.Settings.Default.FolderPath != "" && Properties.Settings.Default.FolderPath != null)
             {
@@ -315,7 +324,10 @@ namespace mailClient
         private void RetriveFolders_Click(object sender, EventArgs e)
         {
 
-            Task.Run(() => mailFunctionality.RetrieveFoldersRestart(Email, Password, Server));
+            Task.Run(() => mailFunctionality.RetrieveFolders(Email, Password, Server));
+            Application.Restart();
+            Application.Exit();
+
             
         }
 

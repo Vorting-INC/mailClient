@@ -530,28 +530,7 @@ namespace mailClient
             }
         }
 
-        public void RetrieveFoldersRestart(string Email, string Password, string Server)
-        {
-            using (var client = new ImapClient())
-            {
-                client.Connect(Server, 993, true);
-                client.Authenticate(Email, Password);
-
-                var Folders = client.GetFolders(new FolderNamespace('.', ""));
-
-                foreach (var item in Folders)
-                {
-                    //create folder in the local storage
-                    //it gets the path from setting
-                    string path = Properties.Settings.Default.FolderPath;
-                    string folderName = item.Name;
-                    string fullPath = Path.Combine(path, folderName);
-                    Directory.CreateDirectory(fullPath);
-                }
-                Application.Restart();
-            }
-        }
-
+      
 
             //Retrieve the Folders from the Email Server and create Folder in the local machine
             public  void  RetrieveFolders(string Email, string Password, string Server)

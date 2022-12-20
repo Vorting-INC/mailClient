@@ -534,14 +534,14 @@ namespace mailClient
 
 
         //Retrieve the Folders from the Email Server and create Folder in the local machine
-        public async void  RetrieveFolders(string Email, string Password, string Server)
+        public  void  RetrieveFolders(string Email, string Password, string Server)
         {
             using (var client = new ImapClient())
             {
-             await   client.ConnectAsync(Server, 993, true);
-             await   client.AuthenticateAsync(Email, Password);
+                client.Connect(Server, 993, true);
+                client.Authenticate(Email, Password);
 
-                var Folders = await client.GetFoldersAsync(new FolderNamespace('.',""));
+                var Folders = client.GetFolders(new FolderNamespace('.',""));
 
                 foreach (var item in Folders)
                 {

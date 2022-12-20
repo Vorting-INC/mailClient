@@ -52,17 +52,15 @@ namespace mailClient
         
                 //when the create storage form is closed run task RetriveFolders_Click
                 createStorage.FormClosed += RetriveFolders_Click;
-                SplashForm.ShowSplashScreen();
 
-                
-              
+
+
                 //wait until there are any folders in the storage
                 //check the direktory of the local storage
 
+                Task.Run(() => mailFunctionality.DownloadAllEmails(Email, Password, Server));
 
             }
-            Task.Run(() => mailFunctionality.DownloadAllEmails(Email, Password, Server));
-            SplashForm.CloseForm();
 
             //retrive folders if local storage exist
             if (Properties.Settings.Default.FolderPath != "" && Properties.Settings.Default.FolderPath != null)

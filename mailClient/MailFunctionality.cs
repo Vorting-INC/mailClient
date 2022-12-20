@@ -497,7 +497,7 @@ namespace mailClient
 
 
                         //check if the mail is a SnapMail
-                        /*if (email.Body.Contains("%%SNAPMAIL%%"))
+                        if (email.Body.Contains("%%SNAPMAIL%%"))
                         {
                             FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "SnapMail");
                             //check if the folder exists
@@ -519,7 +519,7 @@ namespace mailClient
                             await client.Inbox.ExpungeAsync();
 
 
-                        }*/
+                        }
 
                         email.JsonFileName = FileName;
                         //save the file tp the folderPath using storageInterface

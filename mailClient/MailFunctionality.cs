@@ -21,7 +21,7 @@ namespace mailClient
     {
         //creates a instance of the storage interface
         StorageInterface StorageInterface = new StorageInterface();
-        bool downloaded = false;
+        
         //create the object Words and download them form json file
         FilterWordFormat SpamWords = new FilterWordFormat();
         FilterWordFormat BadWords = new FilterWordFormat();
@@ -331,10 +331,7 @@ namespace mailClient
         //Function that downloads all Email from the server and put them into their respective folders
         public async void DownloadAllEmails(string Email, string Password, string Server)
         {
-            if (downloaded == false)
-            {
-                return;
-            }
+           
             using (var client = new ImapClient())
             {
                 if (!client.IsConnected)
@@ -555,7 +552,6 @@ namespace mailClient
                     string fullPath = Path.Combine(path, folderName);
                     Directory.CreateDirectory(fullPath);                   
                 }
-                downloaded = true;
             }
 
             try { 

@@ -496,30 +496,6 @@ namespace mailClient
 
 
 
-                        //check if the mail is a SnapMail
-                        if (email.Body.Contains("%%SNAPMAIL%%"))
-                        {
-                            FolderPath = Path.Combine(Properties.Settings.Default.FolderPath, "SnapMail");
-                            //check if the folder exists
-                            if (!Directory.Exists(FolderPath))
-                            {
-                                Directory.CreateDirectory(FolderPath);
-                            }
-                            //save the file in the spam folder
-
-
-                            //set boolean snapmail to true
-                            email.Snap = true;
-
-                            //remove the snapmail tag from the body
-                            email.Body = email.Body.Replace("%%SNAPMAIL%%", "");
-
-                            //delete the email from the server so it wont be downloaded again
-                            await client.Inbox.AddFlagsAsync(item.UniqueId, MessageFlags.Deleted, true);
-                            await client.Inbox.ExpungeAsync();
-
-
-                        }
 
                         email.JsonFileName = FileName;
                         //save the file tp the folderPath using storageInterface

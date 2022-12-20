@@ -95,15 +95,7 @@ namespace mailClient
                 SplashForm.CloseForm();
                 Interface.Show();
                 
-                //check if storage was created prior
-                if (Properties.Settings.Default.StorageCreated != true)
-
-                {
-                    //if storage was not created, create the storage
-                    CreateStorage CreateStorage = new CreateStorage();
-                    CreateStorage.Show();
-                    
-                }
+                
                 
                 
 

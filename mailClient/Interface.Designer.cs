@@ -32,9 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Interface));
             this.RetrieveNewEmail = new System.Windows.Forms.Button();
             this.RetrievedFolders = new System.Windows.Forms.ListBox();
-            this.RetrieveAllEmail = new System.Windows.Forms.Button();
-            this.RetriveFolders = new System.Windows.Forms.Button();
-            this.CreateStorageButton = new System.Windows.Forms.Button();
             this.SendAnEmail = new System.Windows.Forms.Button();
             this.EmailListView = new System.Windows.Forms.ListView();
             this.From = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -72,36 +69,6 @@
             this.RetrievedFolders.Size = new System.Drawing.Size(125, 304);
             this.RetrievedFolders.TabIndex = 2;
             this.RetrievedFolders.SelectedIndexChanged += new System.EventHandler(this.RetrievedFolders_SelectedIndexChanged);
-            // 
-            // RetrieveAllEmail
-            // 
-            this.RetrieveAllEmail.Location = new System.Drawing.Point(665, 681);
-            this.RetrieveAllEmail.Name = "RetrieveAllEmail";
-            this.RetrieveAllEmail.Size = new System.Drawing.Size(113, 26);
-            this.RetrieveAllEmail.TabIndex = 3;
-            this.RetrieveAllEmail.Text = "Retrieve All Email";
-            this.RetrieveAllEmail.UseVisualStyleBackColor = true;
-            this.RetrieveAllEmail.Click += new System.EventHandler(this.RetrieveAllEmail_Click);
-            // 
-            // RetriveFolders
-            // 
-            this.RetriveFolders.Location = new System.Drawing.Point(784, 681);
-            this.RetriveFolders.Name = "RetriveFolders";
-            this.RetriveFolders.Size = new System.Drawing.Size(114, 26);
-            this.RetriveFolders.TabIndex = 4;
-            this.RetriveFolders.Text = "Retrieve Folders";
-            this.RetriveFolders.UseVisualStyleBackColor = true;
-            this.RetriveFolders.Click += new System.EventHandler(this.RetriveFolders_Click);
-            // 
-            // CreateStorageButton
-            // 
-            this.CreateStorageButton.Location = new System.Drawing.Point(904, 681);
-            this.CreateStorageButton.Name = "CreateStorageButton";
-            this.CreateStorageButton.Size = new System.Drawing.Size(113, 26);
-            this.CreateStorageButton.TabIndex = 5;
-            this.CreateStorageButton.Text = "Create storage";
-            this.CreateStorageButton.UseVisualStyleBackColor = true;
-            this.CreateStorageButton.Click += new System.EventHandler(this.CreateStorageButton_Click);
             // 
             // SendAnEmail
             // 
@@ -222,9 +189,8 @@
             this.SpecialSetting.AutoSize = true;
             this.SpecialSetting.Location = new System.Drawing.Point(580, 688);
             this.SpecialSetting.Name = "SpecialSetting";
-            this.SpecialSetting.Size = new System.Drawing.Size(79, 13);
+            this.SpecialSetting.Size = new System.Drawing.Size(0, 13);
             this.SpecialSetting.TabIndex = 14;
-            this.SpecialSetting.Text = "Speciel setting:";
             // 
             // SettingsButton
             // 
@@ -252,9 +218,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.EmailListView);
             this.Controls.Add(this.SendAnEmail);
-            this.Controls.Add(this.CreateStorageButton);
-            this.Controls.Add(this.RetriveFolders);
-            this.Controls.Add(this.RetrieveAllEmail);
             this.Controls.Add(this.RetrievedFolders);
             this.Controls.Add(this.RetrieveNewEmail);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -272,9 +235,6 @@
 
         private System.Windows.Forms.Button RetrieveNewEmail;
         private System.Windows.Forms.ListBox RetrievedFolders;
-        private System.Windows.Forms.Button RetrieveAllEmail;
-        private System.Windows.Forms.Button RetriveFolders;
-        private System.Windows.Forms.Button CreateStorageButton;
         private System.Windows.Forms.Button SendAnEmail;
         private System.Windows.Forms.ListView EmailListView;
         private System.Windows.Forms.ColumnHeader From;

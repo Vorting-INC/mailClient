@@ -30,7 +30,7 @@ namespace mailClient
 
 
             // Split the input string into words and iterate over each word
-            foreach (string word in input.Split(' '))
+            foreach (string word in input.Split())
             {
                 Console.WriteLine("Censoring " + word);
 

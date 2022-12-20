@@ -34,13 +34,18 @@ namespace mailClient
                     //call the create folder from the storage Class
                     Storage.CreateFolder(FileFolderName.Text, FileFolderLokation.Text);
 
+                    SplashForm.ShowSplashScreen();
+
                     //download all folders and  new emails
                     MailFunctionality mailFunctionality = new MailFunctionality();
                     mailFunctionality.RetrieveFolders(Properties.Settings.Default.Email, Properties.Settings.Default.Password, Properties.Settings.Default.Server);
-                    mailFunctionality.DownloadNewEmails(Properties.Settings.Default.Email, Properties.Settings.Default.Password, Properties.Settings.Default.Server);
+                    mailFunctionality.DownloadAllEmails(Properties.Settings.Default.Email, Properties.Settings.Default.Password, Properties.Settings.Default.Server);
 
                     //close form
+                    Interface Interface = new Interface();
                     this.Close();
+                    SplashForm.CloseForm();
+                    Interface.Show();
                 }
                 else
                 {

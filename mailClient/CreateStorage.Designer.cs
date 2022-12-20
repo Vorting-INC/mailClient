@@ -113,7 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(664, 450);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.OpenFileManager);
             this.Controls.Add(this.FileFolderNameLabel);
@@ -122,6 +122,7 @@
             this.Controls.Add(this.FileFolderName);
             this.Controls.Add(this.CreateFileFolder);
             this.Name = "CreateStorage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CreateStorage";
             this.Load += new System.EventHandler(this.CreateStorage_Load);
             this.ResumeLayout(false);

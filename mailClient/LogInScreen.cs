@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace mailClient
 {
@@ -28,8 +29,10 @@ namespace mailClient
                 PasswordBox.Text = Properties.Settings.Default.Password;
                 EmailAddressBox.Text = Properties.Settings.Default.Email;
                 ServerBox.Text = Properties.Settings.Default.Server;
+
             }
         }
+
 
         private void LogInScreen_Load(object sender, EventArgs e)
         {
@@ -57,8 +60,47 @@ namespace mailClient
         {
 
         }
+        private bool FolderRetrieve = false;
+        private void RetriveFolders_Click(object sender, EventArgs e)
+        {
+            
+            mailFunctionality.RetrieveFolders(EmailAddressBox.Text, PasswordBox.Text, ServerBox.Text);
+            
 
-        
+
+        }
+
+        void initialzeFirstUse()
+        {
+
+            //Message show that yuor are a new user
+            MessageBox.Show("Welcome to Sigmamail, you will have to create local storage before use of the mail functionality on first boot the application will restart");
+            //create local storage by opening create storage Form
+            SplashForm.CloseForm();
+            CreateStorage createStorage = new CreateStorage();
+            createStorage.Show();
+
+            //when the create storage form is closed run task RetriveFolders_Click
+
+            
+
+            
+
+
+
+            
+
+            //wait until there are any folders in the storage
+            //check the direktory of the local storage
+
+
+
+
+        }
+
+
+
+
         private void LogInBotton_Click(object sender, EventArgs e)
         {
             
@@ -73,9 +115,11 @@ namespace mailClient
             this.Hide();
             
                 
-
+            
 
             SplashForm.ShowSplashScreen();
+
+            
 
             if (mailFunctionality.LogIn(EmailAddressBox.Text, PasswordBox.Text, ServerBox.Text))
             {
@@ -84,20 +128,23 @@ namespace mailClient
                 Properties.Settings.Default.Password = PasswordBox.Text;
                 Properties.Settings.Default.Server = ServerBox.Text;
                 Properties.Settings.Default.Save();
-                
-                
-                
-                
-                Interface Interface = new Interface();
-                SplashForm.CloseForm();
-                Interface.Show();
-                
-                
-                
-                
 
+                //first time login
+                if (Properties.Settings.Default.StorageCreated == false)
+                {
+                    
+                    
+                    initialzeFirstUse();
+                   
+                    
 
-
+                }
+                else  
+                {
+                    Interface Interface = new Interface();
+                    SplashForm.CloseForm();
+                    Interface.Show();
+                }
             }
             else
             {

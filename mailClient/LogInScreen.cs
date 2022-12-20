@@ -61,17 +61,14 @@ namespace mailClient
         
         private void LogInBotton_Click(object sender, EventArgs e)
         {
-            //treat the program to runs loadingScreen seperatly
-
-            //LoadingScreen loadingScreen = new LoadingScreen();
-            //loadingScreen.Show();
+            
 
             //add music to the loading screen
             SoundPlayer sndplayr = new
 
             SoundPlayer(mailClient.Properties.Resources.grindsetvokal);
 
-            //sndplayr.Play();
+            sndplayr.Play();
            
             this.Hide();
             

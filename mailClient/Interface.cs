@@ -50,19 +50,8 @@ namespace mailClient
                 //when the create storage form is closed run task RetriveFolders_Click
                 createStorage.FormClosed += RetriveFolders_Click;
 
-                //when RetriveFolder
                 
                 
-
-
-
-
-
-
-
-
-
-
             }
 
             //retrive folders if local storage exist

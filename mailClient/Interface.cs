@@ -165,7 +165,9 @@ namespace mailClient
             foreach (string folder in folders)
             {
                 //do not add attachments and Contacts folder to the listbox
-                if (folder != Properties.Settings.Default.FolderPath + "\\Attachments" && folder != Properties.Settings.Default.FolderPath + "\\ContactsList")
+                if (folder != Properties.Settings.Default.FolderPath + "\\Attachments" 
+                    && folder != Properties.Settings.Default.FolderPath + "\\ContactsList" 
+                    && folder != Properties.Settings.Default.FolderPath + "\\Settings")
                 {
                     RetrievedFolders.Items.Add(Path.GetFileName(folder));
                 }
@@ -309,6 +311,7 @@ namespace mailClient
         {
             //download all mails in the background running the function in a new thread
             Task.Run(() => mailFunctionality.DownloadAllEmails(Email, Password, Server));
+            MessageBox.Show("Downloading emails in the background");
         }
 
         private void RetriveFolders_Click(object sender, EventArgs e)

@@ -41,15 +41,21 @@ namespace mailClient
         //Checks if the email is valid by connectid to Email server with Imap
         public bool LogIn(string Email, string Password, string Server)
         {
-     
+            try
+            {
                 using (var client = new ImapClient())
                 {
                     client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                     client.Connect(Server, 993, true);
                     client.Authenticate(Email, Password);
-                    
+
                     return true;
                 }
+            }
+            catch
+            {
+                return false;
+            }
           
             
         }

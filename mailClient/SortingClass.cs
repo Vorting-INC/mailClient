@@ -11,6 +11,9 @@ namespace mailClient
 {
     namespace ListViewSorter
     {
+        //This is taken from the internet
+
+        
         /// <summary>
         /// This class is an implementation of the 'IComparer' interface.
         /// </summary>

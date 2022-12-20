@@ -112,7 +112,7 @@ namespace mailClient
             }
             else
             {
-                    SplashForm.CloseForm();
+                SplashForm.CloseForm();
                 this.Show();
                 MessageBox.Show("Wrong Email, Password or Server");
                 

@@ -553,8 +553,15 @@ namespace mailClient
                 }
             }
 
+            try { 
             //Download all mails
             DownloadAllEmails(Email, Password, Server);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
         //this function is done
 

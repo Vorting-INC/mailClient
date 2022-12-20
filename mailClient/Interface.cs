@@ -144,7 +144,7 @@ namespace mailClient
             {
                 //do not add attachments and Contacts folder to the listbox
                 if (folder != Properties.Settings.Default.FolderPath + "\\Attachments" 
-                    && folder != Properties.Settings.Default.FolderPath + "\\Contacts" 
+                    && folder != Properties.Settings.Default.FolderPath + "\\ContactList" 
                     && folder != Properties.Settings.Default.FolderPath + "\\Settings")
                 {
                     RetrievedFolders.Items.Add(Path.GetFileName(folder));

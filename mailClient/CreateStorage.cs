@@ -33,6 +33,7 @@ namespace mailClient
                     StorageInterface Storage = new StorageInterface();
                     //call the create folder from the storage Class
                     Storage.CreateFolder(FileFolderName.Text, FileFolderLokation.Text);
+                    this.Hide();
 
                     SplashForm.ShowSplashScreen();
 

@@ -552,6 +552,7 @@ namespace mailClient
                     string fullPath = Path.Combine(path, folderName);
                     Directory.CreateDirectory(fullPath);                   
                 }
+                Application.Restart();
             }
 
             try { 

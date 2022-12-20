@@ -57,11 +57,11 @@ namespace mailClient
 
                 //wait until there are any folders in the storage
                 //check the direktory of the local storage
-                MessageBox.Show("The program will now Exit because of first boot please restart");
-                Application.Restart();                
-()
+               
+
 
             }
+            
 
             //retrive folders if local storage exist
             if (Properties.Settings.Default.FolderPath != "" && Properties.Settings.Default.FolderPath != null)

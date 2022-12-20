@@ -329,7 +329,7 @@ namespace mailClient
         }
 
         //Function that downloads all Email from the server and put them into their respective folders
-        public async void DownloadAllEmails(string Email, string Password, string Server)
+        public void DownloadAllEmails(string Email, string Password, string Server)
         {
            
             using (var client = new ImapClient())
@@ -337,11 +337,11 @@ namespace mailClient
                 if (!client.IsConnected)
                 {
                     Console.WriteLine("Connecting to server...");
-                   await  client.ConnectAsync(Server, 993, true);
-                   await client.AuthenticateAsync(Email, Password);
+                    client.Connect(Server, 993, true);
+                    client.Authenticate(Email, Password);
                 }
 
-                var folders = await client.GetFoldersAsync(new FolderNamespace('.', ""));
+                var folders =  client.GetFolders(new FolderNamespace('.', ""));
                 //Goes through the folders
                 foreach (var folder in folders)
                 {

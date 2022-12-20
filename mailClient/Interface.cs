@@ -48,18 +48,13 @@ namespace mailClient
                 //create local storage by opening create storage Form
                 CreateStorage createStorage = new CreateStorage();
                 createStorage.Show();
-                this.Hide();
+        
                 //when the create storage form is closed run task RetriveFolders_Click
                 createStorage.FormClosed += RetriveFolders_Click;
 
                 //wait until there are any folders in the storage
                 //check the direktory of the local storage
-                while (Directory.Exists(Properties.Settings.Default.FolderPath + "\\Inbox") == false)
-                {
-                    //wait
-                }
-                
-                this.Show();
+               
                 
             }
 
